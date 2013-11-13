@@ -1,0 +1,748 @@
+<yaf> 
+
+    <!-- bloco de configuracoes globais --> 
+    <!-- a declaracao dos atributos deste bloco e' obrigatoria --> 
+    <!-- Valores para draw mode: "fill" , "line", "point" --> 
+    <!-- Valores para shading: "flat", "gouraud" ) --> 
+    <!-- Valores para cullface: "none", "back" , "front" ou "both" --> 
+    <!-- Valores para cullorder : "CCW" ou "CW" --> 
+    <globals background="0.0 0.0 0.0 0.0" drawmode="fill" shading="gouraud" cullface="none" cullorder="CCW" /> 
+     
+    <!-- bloco de camaras: o atributo "initial" identifica a camara/ponto de vista inicial --> 
+    <cameras initial="camera1" >
+        <perspective id="camera1" near="-20" far="20" angle="40.0" pos="20 20 20" target="0.0 0.0 0.0" />
+		<ortho id="camera2" near="1.0" far="2.0" left="1" right="1" top="1" bottom="1" />
+		<perspective id="camera3" near="0.1" far="300" angle="35" pos="30 10 35" target="0 0 0" /> 
+		<ortho id="camera4" near="-20" far="500.0" left="0.0" right="10.0" top="10.0" bottom="0.0" /> 
+    </cameras> 
+   
+
+    <!-- bloco de iluminacao; segue os parametros do OpenGL --> 
+    <lighting doublesided="true" local="true" enabled="true" ambient="0.1 0.1 0.1 1.0" > 
+             <!-- Deve existir um ou mais blocos "light" --> 
+            <!-- Os identificadores "id" nao podem ser repetidos --> 
+            <omni id="light0" enabled="true"
+                location="6.0 20.0 10.0"
+                ambient="0.0 0.0 0.0 1.0" 
+                diffuse="0.0 0.0 0.0 0.0" 
+                specular="1.0 1.0 0.0 1.0" 
+            /> 
+			
+			<omni id="light1" enabled="true" 
+                location="12.5 20.0 10.0"
+                ambient="0.0 0.0 0.0 1.0"
+                diffuse="0.0 0.0 0.0 0.0" 
+                specular="0.0 0.0 0.0 0.0" 
+            /> 
+			
+			<omni id="light2" enabled="true" 
+                location="12.5 20.0 -10.0"
+                ambient="0.0 0.0 0.0 1.0"
+                diffuse="0.0 0.0 0.0 0.0"
+				specular="1.0 1.0 0.0 1.0" 
+            />
+			
+			<omni id="light3" enabled="true" 
+                location="6.0 20.0 -10.0"
+                ambient="0.0 0.0 0.0 1.0" 
+                diffuse="0.0 0.0 0.0 0.0" 
+                specular="0.0 0.0 0.0 0.0" 
+            /> 
+
+    </lighting> 
+
+    <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
+    <textures>
+      <texture id="texture_0" file="texture_0.jpg" />
+      <texture id="texture_1" file="texture_1.jpg" />
+      <texture id="texture_2" file="texture_2.jpg" />
+	  <texture id="floor" file="floor.jpg" />
+    </textures>
+
+    <!-- bloco de materiais; --> 
+    <appearances> 
+		
+		<appearance id="floorApp" 
+            emissive="0.0 0.0 0.0 1.0" 
+            ambient="0.2 0.2 0.2 1.0" 
+            diffuse="0.6 0.6 0.6 1.0" 
+            specular="0.8 0.8 0.8 0.8" 
+            shininess="50" 
+           
+            textureref="floor" 
+            texlength_s="20" 
+            texlength_t="20" 
+           
+        />
+		
+		<appearance id="texture_0_App" 
+            emissive="0.0 0.0 0.0 1.0" 
+            ambient="0.2 0.2 0.2 1.0" 
+            diffuse="0.6 0.6 0.6 1.0" 
+            specular="0.8 0.8 0.8 0.8" 
+            shininess="50" 
+           
+            textureref="texture_0" 
+            texlength_s="1" 
+            texlength_t="1" 
+           
+        />
+		
+		<appearance id="texture_1_App" 
+            emissive="0.0 0.0 0.0 1.0" 
+            ambient="0.2 0.2 0.2 1.0" 
+            diffuse="0.6 0.6 0.6 1.0" 
+            specular="0.8 0.8 0.8 0.8" 
+            shininess="50" 
+           
+            textureref="texture_1" 
+            texlength_s="1" 
+            texlength_t="1" 
+           
+        />
+		
+		<appearance id="texture_2_App" 
+            emissive="0.0 0.0 0.0 1.0" 
+            ambient="0.2 0.2 0.2 1.0" 
+            diffuse="0.6 0.6 0.6 1.0" 
+            specular="0.8 0.8 0.8 0.8" 
+            shininess="50" 
+           
+            textureref="texture_2" 
+            texlength_s="1" 
+            texlength_t="1" 
+           
+        />
+    </appearances> 
+
+    <!-- bloco do grafo; "rootid" identifica o no de raiz --> 
+    <graph rootid="HelicopteroScene">
+		
+		<node id="HelicopteroScene" >
+			<transforms>
+			</transforms>
+			
+			<children>
+				<noderef id="Chao"/>
+				<noderef id="Helicoptero"/>
+			</children>
+		</node>
+		
+		<node id="Chao" > 
+            <transforms> 
+                <scale factor="100.0 0.0 100.0" /> 
+            </transforms>
+			
+			<appearanceref id="floorApp" /> 
+                               
+            <children> 
+                <plane parts="100" />
+            </children> 
+        </node>
+		
+		<node id="Helicoptero" > 
+            <transforms>
+                <translate to="0.0 2.5 0.0" />
+                <rotate axis="y" angle="90" />
+            </transforms>
+			
+			<appearanceref id="texture_0_App" /> 
+				
+            <children> 
+                <noderef id="Cabine"/>
+                <noderef id="Helice"/>
+                <noderef id="Cauda"/>
+                <noderef id="Suporte"/>
+            </children> 
+        </node>
+		
+		<node id="Cabine"> 
+            <transforms>
+                <scale factor="5.0 3.0 3.0" /> 
+                <scale factor="0.5 0.5 0.5" /> 
+            </transforms>
+                               
+            <children> 
+                <sphere radius="1.0" slices="20" stacks="20" /> 
+            </children> 
+        </node>
+		
+		<node id="Helice" displaylist="true"> 
+            <transforms>
+                <translate to="0.0 1.2 0.0" />
+                <rotate axis="x" angle="-90" />
+            </transforms>
+			
+			<appearanceref id="texture_2_App" /> 
+                               
+            <children> 
+                <noderef id="C1"/>
+                <noderef id="C2"/>
+                <noderef id="Helice1"/>
+                <noderef id="Helice2"/>
+            </children> 
+        </node>
+		
+		<node id="C1" displaylist="true"> 
+            <transforms>
+                <scale factor="0.5 0.5 0.5" /> 
+            </transforms>
+                               
+            <children>
+				<cylinder base="0.5" top="0.5" height="1.0" slices="20" stacks="20" />
+            </children> 
+        </node>
+		
+		<node id="C2"> 
+            <transforms>
+                <scale factor="1.5 1.5 0.1" /> 
+                <translate to="0.0 0.0 5.0" />
+            </transforms>
+                               
+            <children> 
+				<cylinder base="0.5" top="0.5" height="1.0" slices="20" stacks="20" />
+            </children> 
+        </node>
+		
+		<node id="Helice1" >
+            <transforms>
+                <scale factor="1.5 1.5 0.08" /> 
+                <translate to="0.0 0.0 6.9" />
+                <scale factor="0.3 10.0 1.0" /> 
+            </transforms>
+                               
+            <children> 
+                <noderef id="H1"/>
+                <noderef id="H2"/>
+                <noderef id="H3"/>
+                <noderef id="H4"/>
+                <noderef id="H5"/>
+                <noderef id="H6"/>
+            </children> 
+        </node>
+		
+		<node id="H1"> 
+            <transforms>
+                <translate to="0.0 -0.5 0.0" />
+                <rotate axis="x" angle="90" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="H2"> 
+            <transforms> 
+                <translate to="0.0 0.5 0.0" />
+                <rotate axis="x" angle="-90" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="H3"> 
+            <transforms> 
+                <translate to="0.5 0.0 0.0" />
+                <rotate axis="y" angle="90" />
+				<rotate axis="z" angle="90" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="H4"> 
+            <transforms> 
+                <translate to="-0.5 0.0 0.0" />
+                <rotate axis="y" angle="90" />
+				<rotate axis="x" angle="-180" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="H5"> 
+            <transforms> 
+                <translate to="0.0 0.0 -0.5" />
+                <rotate axis="x" angle="-180" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="H6"> 
+            <transforms> 
+                <translate to="0.0 0.0 0.5" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node>
+		
+		<node id="Helice2"> 
+            <transforms>
+                <scale factor="1.5 1.5 0.08" /> 
+                <translate to="0.0 0.0 6.9" />
+                <scale factor="10.0 0.3 1.0" /> 
+            </transforms>
+                               
+            <children> 
+                <noderef id="H21"/>
+                <noderef id="H22"/>
+                <noderef id="H23"/>
+                <noderef id="H24"/>
+                <noderef id="H25"/>
+                <noderef id="H26"/>
+            </children> 
+        </node>
+		
+		<node id="H21"> 
+            <transforms>
+                <translate to="0.0 -0.5 0.0" />
+                <rotate axis="x" angle="90" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="H22"> 
+            <transforms> 
+                <translate to="0.0 0.5 0.0" />
+                <rotate axis="x" angle="-90" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="H23"> 
+            <transforms> 
+                <translate to="0.5 0.0 0.0" />
+                <rotate axis="y" angle="90" />
+				<rotate axis="z" angle="90" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="H24"> 
+            <transforms> 
+                <translate to="-0.5 0.0 0.0" />
+                <rotate axis="y" angle="90" />
+				<rotate axis="x" angle="-180" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="H25"> 
+            <transforms> 
+                <translate to="0.0 0.0 -0.5" />
+                <rotate axis="x" angle="-180" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="H26"> 
+            <transforms> 
+                <translate to="0.0 0.0 0.5" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node>
+		
+		<node id="Cauda"> 
+            <transforms>
+            </transforms>
+                               
+            <children> 
+                <noderef id="Barra"/>
+                <noderef id="Extra"/>
+                <noderef id="BarraS"/>
+                <noderef id="HelicePequena"/>
+            </children> 
+        </node>
+		
+		<node id="Barra"> 
+            <transforms>
+                <translate to="2.0 0.0 0.0" />
+                <rotate axis="y" angle="90" /> 
+                <scale factor="0.5 0.5 8.0" /> 
+            </transforms>
+			
+			<appearanceref id="texture_1_App" /> 
+                               
+            <children> 
+				<cylinder base="0.5" top="0.5" height="1.0" slices="20" stacks="20" />
+            </children> 
+        </node>
+		
+		<node id="Extra"> 
+            <transforms>
+                <translate to="2.0 0.0 0.0" />
+                <rotate axis="y" angle="90" /> 
+                <scale factor="0.5 0.5 8.0" /> 
+                <rotate axis="x" angle="-85" /> 
+            </transforms>
+			
+			<appearanceref id="texture_0_App" /> 
+                               
+            <children> 
+				<cylinder base="0.5" top="0.5" height="1.0" slices="20" stacks="20" />
+            </children> 
+        </node>
+		
+		<node id="BarraS"> 
+            <transforms>
+                <translate to="9.3 0.0 0.0" /> 
+                <scale factor="1.5 0.8 0.5" /> 
+                <rotate axis="x" angle="-85" /> 
+            </transforms>
+			
+			<appearanceref id="texture_1_App" /> 
+                               
+            <children> 
+				<cylinder base="0.5" top="0.5" height="1.0" slices="20" stacks="20" />
+            </children> 
+        </node>
+		
+		<node id="HelicePequena"> 
+            <transforms>
+                <scale factor="0.2 0.2 0.2" /> 
+                <translate to="46.0 2.0 1.0" />
+            </transforms>
+			
+			<appearanceref id="texture_2_App" /> 
+                               
+            <children> 
+                <noderef id="CP1"/>
+                <noderef id="CP2"/>
+                <noderef id="HeliceP1"/>
+                <noderef id="HeliceP2"/>
+            </children> 
+        </node>
+		
+		<node id="CP1"> 
+            <transforms>
+                <scale factor="0.5 0.5 0.5" /> 
+            </transforms>
+                               
+            <children>
+				<cylinder base="0.5" top="0.5" height="1.0" slices="20" stacks="20" />
+            </children> 
+        </node>
+		
+		<node id="CP2"> 
+            <transforms>
+                <scale factor="1.5 1.5 0.1" /> 
+                <translate to="0.0 0.0 5.0" />
+            </transforms>
+                               
+            <children> 
+				<cylinder base="0.5" top="0.5" height="1.0" slices="20" stacks="20" />
+            </children> 
+        </node>
+		
+		<node id="HeliceP1"> 
+            <transforms>
+                <scale factor="1.5 1.5 0.08" /> 
+                <translate to="0.0 0.0 6.9" />
+                <scale factor="0.3 10.0 1.0" /> 
+            </transforms>
+                               
+            <children> 
+                <noderef id="HP1"/>
+                <noderef id="HP2"/>
+                <noderef id="HP3"/>
+                <noderef id="HP4"/>
+                <noderef id="HP5"/>
+                <noderef id="HP6"/>
+            </children> 
+        </node>
+		
+		<node id="HP1"> 
+            <transforms>
+                <translate to="0.0 -0.5 0.0" />
+                <rotate axis="x" angle="90" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="HP2"> 
+            <transforms> 
+                <translate to="0.0 0.5 0.0" />
+                <rotate axis="x" angle="-90" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="HP3"> 
+            <transforms> 
+                <translate to="0.5 0.0 0.0" />
+                <rotate axis="y" angle="90" />
+				<rotate axis="z" angle="90" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="HP4"> 
+            <transforms> 
+                <translate to="-0.5 0.0 0.0" />
+                <rotate axis="y" angle="90" />
+				<rotate axis="x" angle="-180" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="HP5"> 
+            <transforms> 
+                <translate to="0.0 0.0 -0.5" />
+                <rotate axis="x" angle="-180" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="HP6"> 
+            <transforms> 
+                <translate to="0.0 0.0 0.5" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node>
+		
+		<node id="HeliceP2"> 
+            <transforms>
+                <scale factor="1.5 1.5 0.08" /> 
+                <translate to="0.0 0.0 6.9" />
+                <scale factor="10.0 0.3 1.0" /> 
+            </transforms>
+                               
+            <children> 
+                <noderef id="HP21"/>
+                <noderef id="HP22"/>
+                <noderef id="HP23"/>
+                <noderef id="HP24"/>
+                <noderef id="HP25"/>
+                <noderef id="HP26"/>
+            </children> 
+        </node>
+		
+		<node id="HP21"> 
+            <transforms>
+                <translate to="0.0 -0.5 0.0" />
+                <rotate axis="x" angle="90" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="HP22"> 
+            <transforms> 
+                <translate to="0.0 0.5 0.0" />
+                <rotate axis="x" angle="-90" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="HP23"> 
+            <transforms> 
+                <translate to="0.5 0.0 0.0" />
+                <rotate axis="y" angle="90" />
+				<rotate axis="z" angle="90" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="HP24"> 
+            <transforms> 
+                <translate to="-0.5 0.0 0.0" />
+                <rotate axis="y" angle="90" />
+				<rotate axis="x" angle="-180" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="HP25"> 
+            <transforms> 
+                <translate to="0.0 0.0 -0.5" />
+                <rotate axis="x" angle="-180" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node> 
+		
+		<node id="HP26"> 
+            <transforms> 
+                <translate to="0.0 0.0 0.5" />
+            </transforms>
+                               
+            <children> 
+                <rectangle xy1="-0.5 -0.5" xy2="0.5 0.5" />
+            </children> 
+        </node>
+		
+		<node id="Suporte"> 
+            <transforms>
+            </transforms>
+			
+			<appearanceref id="texture_1_App" /> 
+                               
+            <children> 
+                <noderef id="Suporte1"/>
+                <noderef id="Suporte2"/>
+            </children> 
+        </node>
+		
+		<node id="Suporte1"> 
+            <transforms>
+                <rotate axis="y" angle="-90" />
+                <rotate axis="z" angle="30" />
+                <translate to="-1.5 -0.5 0.0" />
+            </transforms>
+                               
+            <children> 
+                <noderef id="S11"/>
+                <noderef id="S12"/>
+                <noderef id="S13"/>
+            </children> 
+        </node>
+		
+		<node id="S11"> 
+            <transforms>
+                <scale factor="0.5 0.5 5.0" /> 
+                <translate to="3.0 -4.2 -0.5" />
+            </transforms>
+                               
+            <children> 
+				<cylinder base="0.5" top="0.5" height="1.0" slices="20" stacks="20" />
+            </children> 
+        </node>
+		
+		<node id="S12"> 
+            <transforms>
+                <rotate axis="x" angle="-90" />
+                <scale factor="0.5 0.5 2.0" /> 
+                <translate to="3.0 -2.2 -1.0" />
+            </transforms>
+                               
+            <children> 
+				<cylinder base="0.5" top="0.5" height="1.0" slices="20" stacks="20" />
+            </children> 
+        </node>
+		
+		<node id="S13"> 
+            <transforms>
+                <rotate axis="x" angle="-90" />
+                <scale factor="0.5 0.5 2.0" /> 
+                <translate to="3.0 2.0 -1.0" />
+            </transforms>
+                               
+            <children> 
+				<cylinder base="0.5" top="0.5" height="1.0" slices="20" stacks="20" />
+            </children> 
+        </node>
+		
+		<node id="Suporte2"> 
+            <transforms>
+                <rotate axis="y" angle="-90" />
+                <rotate axis="z" angle="30" />
+                <translate to="-1.5 -0.5 0.0" />
+                <rotate axis="y" angle="-180" />
+                <rotate axis="z" angle="60" />
+                <translate to="-1.7 1.0 0.0" />
+            </transforms>
+                               
+            <children> 
+                <noderef id="S11"/>
+                <noderef id="S12"/>
+                <noderef id="S13"/>
+            </children> 
+        </node>
+		
+		<node id="S21"> 
+            <transforms>
+                <scale factor="0.5 0.5 5.0" /> 
+                <translate to="3.0 -4.2 -0.5" />
+            </transforms>
+                               
+            <children> 
+				<cylinder base="0.5" top="0.5" height="1.0" slices="20" stacks="20" />
+            </children> 
+        </node>
+		
+		<node id="S22"> 
+            <transforms>
+                <rotate axis="x" angle="-90" />
+                <scale factor="0.5 0.5 2.0" /> 
+                <translate to="3.0 -2.2 -1.0" />
+            </transforms>
+                               
+            <children> 
+				<cylinder base="0.5" top="0.5" height="1.0" slices="20" stacks="20" />
+            </children> 
+        </node>
+		
+		<node id="S23"> 
+            <transforms>
+                <rotate axis="x" angle="-90" />
+                <scale factor="0.5 0.5 2.0" /> 
+                <translate to="3.0 2.0 -1.0" />
+            </transforms>
+                               
+            <children> 
+				<cylinder base="0.5" top="0.5" height="1.0" slices="20" stacks="20" />
+            </children> 
+        </node>
+    </graph> 
+</yaf> 
