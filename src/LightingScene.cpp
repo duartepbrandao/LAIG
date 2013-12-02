@@ -139,17 +139,25 @@ void LightingScene::display()
 		glPopMatrix();
 	}
 	glPopMatrix();
+	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 
 	for (int r=0; r < NUM_ROWS; r++)
 	{
 		glPushMatrix();
-		glTranslatef(r*4, 0, 0);
+		glTranslatef(r*2.02-23, 0.01, -25.2);
 		glRotated(90, 0, 0, 1);
 		glLoadName(r);
 		for (int c=0; c < NUM_COLS; c++)
 		{
 			glPushMatrix();
-			glTranslatef(0,0,(c+1)*5);
+			if(c==0){
+				glTranslatef(0,0,(c+1)*1.8);
+			}else if(c==NUM_COLS-1){
+				glTranslatef(0,0,(c+1)*2.01);
+			}else{
+				glTranslatef(0,0,(c+1)*2);
+			}
+			glScaled(1.0, 0.2, 0.2);
 			glRotatef(90,0,1,0);
 			glPushName(c);
 			object->draw();
@@ -157,6 +165,7 @@ void LightingScene::display()
 			glPopMatrix();
 		}
 		glPopMatrix();
+		glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 	}
 
 	// ---- END feature demos
