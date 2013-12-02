@@ -1,0 +1,28 @@
+newmtl Cube
+illum 2
+Kd 0.64 0.64 0.64
+Ka 0.0 0.0 0.0
+Ks 0.5 0.5 0.5
+Tf 1.0 1.0 1.0
+Ni 1
+Ns 96.0784
+map_Kd models/cube_map_01.jpg
+
+newmtl Monkey
+illum 1
+Kd 0.13011 0.060431 0.009059
+Ka 0.0 0.0 0.0
+Ks 0.0 0.0 0.0
+Tf 1.0 1.0 1.0
+Ni 1
+Ns 96.0784
+
+newmtl Sphere_earth.jpg
+illum 2
+Kd 1.0 0.5 0.0
+Ka 0.0 0.0 0.0
+Ks 0.5 0.5 0.5
+Tf 1.0 1.0 1.0
+Ni 1
+Ns 96.0784
+map_Kd models/earth.jpg

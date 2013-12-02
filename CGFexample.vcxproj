@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\Appearence.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\ExampleObject.cpp" />
+    <ClCompile Include="src\Globals.cpp" />
+    <ClCompile Include="src\Light.cpp" />
+    <ClCompile Include="src\LightingScene.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Node.cpp" />
+    <ClCompile Include="src\Object.cpp" />
+    <ClCompile Include="src\objload.cpp" />
+    <ClCompile Include="src\Primitive.cpp" />
+    <ClCompile Include="src\SpotLight.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\TPinterface.cpp" />
+    <ClCompile Include="src\Transforms.cpp" />
+    <ClCompile Include="src\XMLScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Globals.h" />
+    <ClInclude Include="include\tinystr.h" />
+    <ClInclude Include="include\tinyxml.h" />
+    <ClInclude Include="include\XMLScene.h" />
+    <ClInclude Include="src\Animation.h" />
+    <ClInclude Include="src\Appearence.h" />
+    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\ExampleObject.h" />
+    <ClInclude Include="src\Light.h" />
+    <ClInclude Include="src\LightingScene.h" />
+    <ClInclude Include="src\Node.h" />
+    <ClInclude Include="src\Object.h" />
+    <ClInclude Include="src\objload.h" />
+    <ClInclude Include="src\Primitive.h" />
+    <ClInclude Include="src\SpotLight.h" />
+    <ClInclude Include="src\Texture.h" />
+    <ClInclude Include="src\TPinterface.h" />
+    <ClInclude Include="src\Transforms.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3A4F1E3F-8862-4892-A1EA-E3EE90BE15AB}</ProjectGuid>
+    <RootNamespace>CGFexample</RootNamespace>
+    <ProjectName>LAIG_2</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>bin\</OutDir>
+    <LibraryPath>C:\Users\João\Desktop\TP6 - Copy\lib;lib;$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSdkDir)lib;$(FrameworkSDKDir)\lib</LibraryPath>
+    <IncludePath>include\CGF;include;$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include</IncludePath>
+    <IntDir>..\buildtemp\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Tinyxml.lib;glew32.lib;CGFlib.lib;kernel32.lib;user32.lib;assimp.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>Libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
