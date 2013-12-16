@@ -165,8 +165,11 @@ void TPinterface::processHits (GLint hits, GLuint buffer[])
 		// this should be replaced by code handling the picked object's ID's (stored in "selected"), 
 		// possibly invoking a method on the scene class and passing "selected" and "nselected"
 		printf("Picked ID's: ");
-		for (int i=0; i<nselected; i++)
+		for (int i=0; i<nselected; i++){
 			printf("%d ",selected[i]);
+		}
+		((LightingScene*) scene)->deltaX=selected[0]*2.57*1.5+3.05+1.5/2;
+		((LightingScene*) scene)->deltaY=selected[1]*2.57*1.5+3.1+1.5/2;
 		printf("\n");
 	}
 	else

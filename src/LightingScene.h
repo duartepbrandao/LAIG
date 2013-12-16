@@ -13,6 +13,7 @@
 class LightingScene : public CGFscene
 {
 public:
+	float deltaX, deltaY, x, y;
 
 	void init();
 	void display();

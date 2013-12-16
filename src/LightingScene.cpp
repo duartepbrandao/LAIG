@@ -8,9 +8,9 @@
 
 #define BOARD_HEIGHT 6.0
 #define BOARD_WIDTH 6.4
-#define NUM_OBJS 24*24
-#define NUM_ROWS 24
-#define NUM_COLS 24
+#define NUM_OBJS 12*12
+#define NUM_ROWS 12
+#define NUM_COLS 12
 
 LightingScene::LightingScene(vector<Light*> lights, Globals* globals,vector<Camera*> cameras, std::string id, map<string, Node*> scene, map<string, Appearence*> appearances,  map<string, Animation*> animations){
 	this->globals=globals;
@@ -32,6 +32,9 @@ LightingScene::LightingScene(vector<Light*> lights, Globals* globals,vector<Came
 	this->appearances=appearances;
 	this->animations=animations;
 	drawmode=this->globals->getDrawMode()-GL_POINT;
+
+	x=deltaX=3.05+1.5/2;
+	y=deltaY=3.1+1.5/2;
 
 	//obj = new Object("models/MultiTextures.obj");
 	//pecas de jogo
@@ -98,6 +101,9 @@ void LightingScene::display()
 	activateCamera(camera);
 	activeCamera->applyView();
 	//cameras
+	
+	//GLOBALS
+	glPolygonMode(GL_FRONT_AND_BACK,GL_POINT+drawmode);
 
 	//LIGHTS
 	for(unsigned int i=0;i<lightState.size();i++){
@@ -110,8 +116,6 @@ void LightingScene::display()
 		lights[i]->update();
 	}
 
-	//GLOBALS
-	glPolygonMode(GL_FRONT_AND_BACK,GL_POINT+drawmode);
 
 	// Draw axis
 	axis.draw();
@@ -119,9 +123,10 @@ void LightingScene::display()
 
 	// ---- BEGIN Primitive drawing section
 	drawAllThings(id);
-
+	x=deltaX;
+	y=deltaY;
 	glPushMatrix();
-	glTranslated(2.8, 0.0, 2.4);
+	glTranslated(x, 0.0, y);
 	peca1->draw();
 	glPopMatrix();
 	// ---- END Primitive drawing section
@@ -144,20 +149,14 @@ void LightingScene::display()
 	for (int r=0; r < NUM_ROWS; r++)
 	{
 		glPushMatrix();
-		glTranslatef(r*2.02-23, 0.01, -25.2);
+		glScaled(1.5,1.0,1.5);
+		glTranslatef(r*2.57+3.05, 0.01, 0.0);
 		glRotated(90, 0, 0, 1);
 		glLoadName(r);
 		for (int c=0; c < NUM_COLS; c++)
 		{
 			glPushMatrix();
-			if(c==0){
-				glTranslatef(0,0,(c+1)*1.8);
-			}else if(c==NUM_COLS-1){
-				glTranslatef(0,0,(c+1)*2.01);
-			}else{
-				glTranslatef(0,0,(c+1)*2);
-			}
-			glScaled(1.0, 0.2, 0.2);
+			glTranslatef(0,0.01,c*2.57+3.1);
 			glRotatef(90,0,1,0);
 			glPushName(c);
 			object->draw();
