@@ -484,7 +484,7 @@ Pflag::Pflag(void)
 
 Pflag::Pflag( std::string heightmap, std::string texturemap, std::string fragmentshader, std::string vertexshader ){
 	suporte=new Pcylinder(0.5, 0.5, 1.0, 20, 20);
-	topo=new Psphere(0.2,10,10);
+	topo=new Psphere(0.5,10,10);
 	plane= new Pplane(100);
 
 	pecas = new CGFappearance(ambA,difA,specA,shininessA);
@@ -547,15 +547,15 @@ void Pflag::setVertexShader( std::string vertex )
 void Pflag::draw(){
 
 	glPushMatrix();
-	glTranslated(0,2,0);
-	glScaled(0.2,2,0.2);
+	glTranslated(0,4,0);
+	glScaled(0.5,4,0.5);
 	glRotated(90,1,0,0);
 	pecas->apply();
 	suporte->draw();
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslated(0,2,0);
+	glTranslated(0,4,0);
 	pecas1->apply();
 	topo->draw();
 	glPopMatrix();
