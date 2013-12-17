@@ -12,7 +12,7 @@ using namespace std;
 
 class TwixtSocket{
 public:
-	TwixtSocket();
+	TwixtSocket(char* gameMode);
 
 	bool socketConnect();
 	void envia(char *s, int len);

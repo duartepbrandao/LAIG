@@ -20,7 +20,6 @@
     <ClCompile Include="src\LightingScene.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Node.cpp" />
-    <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\objload.cpp" />
     <ClCompile Include="src\Primitive.cpp" />
     <ClCompile Include="src\SpotLight.cpp" />
@@ -42,7 +41,6 @@
     <ClInclude Include="src\Light.h" />
     <ClInclude Include="src\LightingScene.h" />
     <ClInclude Include="src\Node.h" />
-    <ClInclude Include="src\Object.h" />
     <ClInclude Include="src\objload.h" />
     <ClInclude Include="src\Primitive.h" />
     <ClInclude Include="src\SpotLight.h" />

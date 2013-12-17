@@ -7,7 +7,6 @@
 #include "Primitive.h"
 #include "Node.h"
 #include "Animation.h"
-#include "Object.h"
 
 
 class LightingScene : public CGFscene
@@ -21,7 +20,6 @@ public:
 	//GLOBALS
 	Globals* globals;
 	int drawmode;
-	Object * obj;
 	//CAMERAS
 	vector<Camera*> cameras;
 	int camera;
@@ -42,8 +40,7 @@ public:
 
 	//Twixt
 	Node* n;
-	Pflag* peca1;
-	Pflag* peca2;
+	Peca* peca;
 	CGFobject* object;//picking
 	vector<Appearence*> apps;
 

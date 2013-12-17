@@ -477,138 +477,39 @@ void Pwaterline::update(unsigned long systm){
 }
 
 //peao de jogo
-Pflag::Pflag(void)
+Peca::Peca(void)
 {
 
 }
 
-Pflag::Pflag( std::string heightmap, std::string texturemap, std::string fragmentshader, std::string vertexshader ){
-	suporte=new Pcylinder(0.5, 0.5, 1.0, 20, 20);
-	topo=new Psphere(0.5,10,10);
-	plane= new Pplane(100);
+Peca::Peca(std::string theme, int playerNumber, std::string player, std::string base_name){
+	this->theme=theme;
+	this->playerNumber=playerNumber;
+	this->player=player;
+	this->base_name=base_name;
 
-	pecas = new CGFappearance(ambA,difA,specA,shininessA);
-	pecas->setTexture("Mario/flag.jpg");
-	pecas1 = new CGFappearance(ambA,difA,specA,shininessA);
-	pecas1->setTexture("Mario/flag_player_1.jpg");
-	pecas2 = new CGFappearance(ambA,difA,specA,shininessA);
-	pecas2->setTexture("Mario/flag_player_2.jpg");
+	base=new Pcylinder(0.5, 0.5, 1.0, 20, 20);
+	top=new Psphere(0.5,10,10);
+	
+	top_app = new CGFappearance(ambA,difA,specA,shininessA);
+	top_app->setTexture(player);
 
-	this->heightmap=heightmap;
-	this->texturemap=texturemap;
-	this->fragmentshader=fragmentshader;
-	this->vertexshader=vertexshader;
-	firstTime=true;
-	lastTime=0;
-
+	base_app = new CGFappearance(ambA,difA,specA,shininessA);
+	base_app->setTexture(base_name);
 }
 
-void Pflag::setHeightMap( std::string height )
-{
-	this->heightmap=height;
-}
-
-std::string Pflag::getHeightMap()
-{
-	return this->heightmap;
-}
-
-
-std::string Pflag::getTextureMap()
-{
-	return this->texturemap;
-}
-
-void Pflag::setTextureMap( std::string texture )
-{
-	this->texturemap=texture;
-}
-
-std::string Pflag::getFragmentShader()
-{
-	return this->fragmentshader;
-}
-
-void Pflag::setFragmentShader( std::string fragment )
-{
-	this->fragmentshader=fragment;
-}
-
-std::string Pflag::getVertexShader()
-{
-	return this->vertexshader;
-}
-
-void Pflag::setVertexShader( std::string vertex )
-{
-	this->vertexshader=vertex;
-}
-
-void Pflag::draw(){
-
+void Peca::draw(){
 	glPushMatrix();
 	glTranslated(0,4,0);
 	glScaled(0.5,4,0.5);
 	glRotated(90,1,0,0);
-	pecas->apply();
-	suporte->draw();
+	base_app->apply();
+	base->draw();
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslated(0,4,0);
-	pecas1->apply();
-	topo->draw();
+	top_app->apply();
+	top->draw();
 	glPopMatrix();
-
-	if(firstTime){
-		//Path dos ficheiros
-		init(vertexshader.c_str(),fragmentshader.c_str());
-		CGFshader::bind();//tratar dos shaders
-
-		//inicia as texturas
-		baseTexture=new CGFtexture(texturemap);
-		secTexture=new CGFtexture(heightmap);
-
-		timer=0;//tempo actual
-		timerL = glGetUniformLocation(id(), "timer");//tempo a ser usado no .vert
-
-		//identifica a textura (GL_TEXTURE0 e 1)
-		baseImageLoc = glGetUniformLocation(id(), "textImage");
-		glUniform1i(baseImageLoc, 0);
-
-		secImageLoc = glGetUniformLocation(id(), "mapImage");
-		glUniform1i(secImageLoc, 1);
-
-		firstTime=false;
-	}else{
-		CGFshader::bind();
-		glUniform1f(timerL, timer);//update para o .vert
-	}
-
-	glActiveTexture(GL_TEXTURE0);//activa a textura com o id
-
-	baseTexture->apply();
-
-	glActiveTexture(GL_TEXTURE1);
-
-	secTexture->apply();
-
-	glActiveTexture(GL_TEXTURE0);
-
-	//glPushMatrix();
-	//plane->draw();
-	//glPopMatrix();
-
-	CGFshader::unbind();
-}
-
-void Pflag::update(unsigned long systm){
-	if(timer==0){
-		lastTime=systm;
-		timer=0.01;
-	}
-	if(systm-lastTime>=100){
-		timer+=0.05;
-		lastTime=systm;
-	}
 }

@@ -17,7 +17,6 @@
 #include <map>
 #include "Animation.h"
 #include "objload.h"
-#include "Object.h"
 
 class XMLScene
 {
@@ -50,7 +49,6 @@ public:
 
 	//Twixt
 	Obj::File* obj;
-	Object* obj2;
 
 	XMLScene(char *filename);
 	~XMLScene();

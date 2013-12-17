@@ -58,8 +58,7 @@ void TPinterface::initGUI()
 	GLUI_Listbox *themeslistbox = addListboxToPanel(themesPanel,"Themes",&((LightingScene*) scene)->app,4);
 	themeslistbox->add_item(0, "classic");
 	themeslistbox->add_item(1, "mario");
-	themeslistbox->add_item(2, "black");
-	themeslistbox->add_item(3, "gray");
+	themeslistbox->add_item(2, "dragon ball");
 }
 
 void TPinterface::processGUI(GLUI_Control *ctrl)

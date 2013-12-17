@@ -38,7 +38,7 @@ LightingScene::LightingScene(vector<Light*> lights, Globals* globals,vector<Came
 
 	//obj = new Object("models/MultiTextures.obj");
 	//pecas de jogo
-	peca1=new Pflag("watermap.jpg", "water.jpg", "textureDemo2.frag", "textureDemo2.vert");
+	peca=new Peca("Classic/classic.yaf", 1, "Classic/topo_1.jpg", "Classic/base.jpg");
 	object=new ExampleObject();
 	//peca2=new Pflag();
 }
@@ -127,7 +127,7 @@ void LightingScene::display()
 	y=deltaY;
 	glPushMatrix();
 	glTranslated(x, 0.0, y);
-	peca1->draw();
+	peca->draw();
 	glPopMatrix();
 	// ---- END Primitive drawing section
 
@@ -145,7 +145,8 @@ void LightingScene::display()
 	}
 	glPopMatrix();
 	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-
+	glEnable(GL_BLEND); //Enable blending.
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	for (int r=0; r < NUM_ROWS; r++)
 	{
 		glPushMatrix();
@@ -166,6 +167,7 @@ void LightingScene::display()
 		glPopMatrix();
 		glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 	}
+	glDisable(GL_BLEND);
 
 	// ---- END feature demos
 
@@ -180,10 +182,13 @@ void LightingScene::display()
 
 		if(app==0){
 			loadTheme("Classic/classic.yaf");
+			peca=new Peca("Classic/classic.yaf", 1, "Classic/topo_1.jpg", "Classic/base.jpg");
 		}else if(app==1){
 			loadTheme("Mario/mario.yaf");
+			peca=new Peca("Mario/mario.yaf", 1, "Mario/topo_1.jpg", "Mario/base.jpg");
 		}else if(app==2){
-		}else if(app==3){
+			loadTheme("DragonBall/dragonball.yaf");
+			peca=new Peca("DragonBall/mario.yaf", 1, "DragonBall/topo_1.jpg", "DragonBall/topo_1.jpg");
 		}
 		init();
 		appChoose=true;
