@@ -7,6 +7,7 @@
 #include "Primitive.h"
 #include "Node.h"
 #include "Animation.h"
+#include "objload.h"
 
 
 class LightingScene : public CGFscene
@@ -43,6 +44,7 @@ public:
 	Peca* peca;
 	CGFobject* object;//picking
 	vector<Appearence*> apps;
+	vector<Peca> pecas;
 
 	LightingScene(vector<Light*> lights,Globals* globals, vector<Camera*> camera, std::string id, map<string, Node*> scene, map<string, Appearence*> appearances, map<string, Animation*> animations);
 	~LightingScene();

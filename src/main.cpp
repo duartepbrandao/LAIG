@@ -6,6 +6,7 @@
 #include "CGFapplication.h"
 #include "LightingScene.h"
 #include "TPinterface.h"
+//#include "TwixtSocket.h"
 
 using std::cout;
 using std::exception;
@@ -13,6 +14,8 @@ using std::exception;
 int main(int argc, char* argv[]) {
 
 	XMLScene xmlscene=XMLScene("Classic/classic.yaf"/*"teste.yaf"*/);
+
+	//TwixtSocket* ts =new TwixtSocket("");
 
 	CGFapplication app = CGFapplication();
 

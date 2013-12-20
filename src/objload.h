@@ -678,4 +678,37 @@ namespace Obj {
 	};
 }
 
+class Peca:public Primitive{
+	//Peca
+	Psphere* top;
+	Obj::File* top2;
+	Pcylinder* base;
+
+	//Appearances
+	CGFappearance* base_app;
+	CGFappearance* top_app;
+
+	std::string theme, player, base_name;
+	char *filename;
+	int playerNumber;
+
+public:
+	Peca(void);
+	Peca::Peca(std::string theme, int playerNumber, std::string player, std::string base_name);
+	Peca::Peca(char* filename, std::string theme, int playerNumber, std::string player, std::string base_name);
+
+	std::string getPlayer1();
+	std::string getPlayer2();
+	std::string getBase1();
+	std::string getBase2();
+
+	void setPlayer1(std::string player1);
+	void setPlayer2(std::string player2);
+	void setBase1(std::string base1);
+	void setBase2(std::string base2);
+
+	void draw();
+};
+
+
 #endif

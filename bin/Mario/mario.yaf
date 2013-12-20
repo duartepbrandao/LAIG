@@ -53,7 +53,7 @@
 
     <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
     <textures>
-      <texture id="box" file="Mario/mario_box.jpg" />
+      <texture id="box" file="Mario/block.png" />
       <texture id="board_tex_2" file="Mario/mario_tex_2.jpg" />
       <texture id="board_tex" file="Mario/mario_tex.jpg" />
       <texture id="board" file="Mario/mario.jpg" />
@@ -100,10 +100,10 @@
 		
 		<appearance id="board_box" 
             emissive="0.0 0.0 0.0 0.0" 
-            ambient="0.25 0.25 0.25 0.0" 
-            diffuse="0.4 0.4 0.4 0.0" 
-            specular="0.774597 0.774597 0.774597 0.0" 
-            shininess="0.4" 
+            ambient="0.0 0.0 0.0 0.0" 
+            diffuse="1.0 1.0 1.0 1.0" 
+            specular="0.500000 0.500000 0.500000 0.0" 
+            shininess="96" 
            
             textureref="box" 
             texlength_s="1" 
@@ -122,7 +122,6 @@
 			
 			<children>
 				<noderef id="Board"/>
-				<noderef id="Borda"/>
 				<noderef id="Box"/>
 			</children>
 		</node>
@@ -203,176 +202,16 @@
         </node>
 
 		
-		<node id="Borda"> 
-            <transforms>
-                <translate to="0.0 0.5 0.0" />
-            </transforms>
-			
-			<appearanceref id="board_tex_app" /> 
-			
-            <children> 
-				<noderef id="B1"/>
-				<noderef id="B2"/>
-				<noderef id="B3"/>
-				<noderef id="B4"/>
-				<noderef id="B5"/>
-				<noderef id="B6"/>
-            </children> 
-        </node>
-		
-		<node id="B1"> 
-            <transforms>
-                <translate to="0.0 -1.0 0.0" />
-                <scale factor="65.0 1.0 65.0" />
-            </transforms>
-			
-            <children>
-			<plane parts="100" />
-            </children> 
-        </node>
-		
-		<node id="B2"> 
-            <transforms>
-                <translate to="0.0 -1.5 -32.5" />
-                <scale factor="65.0 1.0 1.0" />
-                <rotate axis="x" angle="-90" />
-            </transforms>
-			
-            <children>
-			<plane parts="50" />
-            </children> 
-        </node>
-		
-		<node id="B3"> 
-            <transforms>
-                <translate to="0.0 -1.5 32.5" />
-                <scale factor="65.0 1.0 1.0" />
-                <rotate axis="x" angle="90" />
-            </transforms>
-			
-            <children>
-			<plane parts="50" />
-            </children> 
-        </node>
-		
-		<node id="B4"> 
-            <transforms>
-                <translate to="32.5 -1.5 0.0" />
-                <scale factor="1.0 1.0 65.0" />
-                <rotate axis="z" angle="-90" />
-            </transforms>
-			
-            <children>
-			<plane parts="50" />
-            </children> 
-        </node>
-		
-		<node id="B5"> 
-            <transforms>
-                <translate to="-32.5 -1.5 0.0" />
-                <scale factor="1.0 1.0 65.0" />
-                <rotate axis="z" angle="90" />
-            </transforms>
-			
-            <children>
-			<plane parts="50" />
-            </children> 
-        </node>
-		
-		<node id="B6"> 
-            <transforms>
-                <translate to="0.0 -2.0 0.0" />
-                <scale factor="65.0 1.0 65.0" />
-                <rotate axis="x" angle="-180" />
-            </transforms>
-			
-            <children>
-			<plane parts="100" />
-            </children> 
-        </node>
-
-		
 		<node id="Box"> 
             <transforms>
-                <translate to="0.0 -36.0 0.0" />
-                <scale factor="10.0 10.0 10.0" />
+                <translate to="0.0 -96.0 0.0" />
+                <scale factor="50.0 50.0 50.0" />
             </transforms>
 			
-            <children> 
-				<noderef id="Box1"/>
-				<noderef id="Box2"/>
-				<noderef id="Box3"/>
-				<noderef id="Box4"/>
-				<noderef id="Box5"/>
-				<noderef id="Box6"/>
-            </children> 
-        </node>
-		
-		<node id="Box1"> 
-            <transforms>
-                <translate to="0.0 3.0 0.0" />
-            </transforms>
+			<appearanceref id="board_box" />
 			
             <children>
-                 <waterline heightmap="Mario/mario_box_map_2.jpg" texturemap="Mario/mario_box_2.jpg" fragmentshader="Mario/mario_box_tex.frag" vertexshader ="Mario/mario_box_tex.vert"/>
-            </children> 
-        </node>
-		
-		<node id="Box2"> 
-            <transforms>
-                <translate to="0.0 0.0 -3.0" />
-                <rotate axis="x" angle="-90" />
-                <rotate axis="y" angle="180" />
-            </transforms>
-			
-            <children>
-                 <waterline heightmap="Mario/mario_box_map.jpg" texturemap="Mario/mario_box.jpg" fragmentshader="Mario/mario_box_tex.frag" vertexshader ="Mario/mario_box_tex.vert"/>
-            </children> 
-        </node>
-		
-		<node id="Box3"> 
-            <transforms>
-                <translate to="0.0 0.0 3.0" />
-                <rotate axis="x" angle="90" />
-            </transforms>
-			
-            <children>
-                 <waterline heightmap="Mario/mario_box_map.jpg" texturemap="Mario/mario_box.jpg" fragmentshader="Mario/mario_box_tex.frag" vertexshader ="Mario/mario_box_tex.vert"/>
-            </children> 
-        </node>
-		
-		<node id="Box4"> 
-            <transforms>
-                <translate to="3.0 0.0 0.0" />
-                <rotate axis="z" angle="-90" />
-                <rotate axis="y" angle="90" />
-            </transforms>
-			
-            <children>
-                 <waterline heightmap="Mario/mario_box_map.jpg" texturemap="Mario/mario_box.jpg" fragmentshader="Mario/mario_box_tex.frag" vertexshader ="Mario/mario_box_tex.vert"/>
-            </children> 
-        </node>
-		
-		<node id="Box5"> 
-            <transforms>
-                <translate to="-3.0 0.0 0.0" />
-                <rotate axis="z" angle="90" />
-                <rotate axis="y" angle="-90" />
-            </transforms>
-			
-            <children>
-                 <waterline heightmap="Mario/mario_box_map.jpg" texturemap="Mario/mario_box.jpg" fragmentshader="Mario/mario_box_tex.frag" vertexshader ="Mario/mario_box_tex.vert"/>
-            </children> 
-        </node>
-		
-		<node id="Box6"> 
-            <transforms>
-                <translate to="0.0 -3.0 0.0" />
-                <rotate axis="x" angle="-180" />
-            </transforms>
-			
-            <children>
-                 <waterline heightmap="Mario/mario_box_map_2.jpg" texturemap="Mario/mario_box_2.jpg" fragmentshader="Mario/mario_box_tex.frag" vertexshader ="Mario/mario_box_tex.vert"/>
+				<object filename="Mario/box.obj" />
             </children> 
         </node>
     </graph> 

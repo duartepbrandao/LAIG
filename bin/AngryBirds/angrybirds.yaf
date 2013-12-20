@@ -1,0 +1,177 @@
+<yaf> 
+
+    <!-- bloco de configuracoes globais --> 
+    <!-- a declaracao dos atributos deste bloco e' obrigatoria --> 
+    <!-- Valores para draw mode: "fill" , "line", "point" --> 
+    <!-- Valores para shading: "flat", "gouraud" ) --> 
+    <!-- Valores para cullface: "none", "back" , "front" ou "both" --> 
+    <!-- Valores para cullorder : "CCW" ou "CW" --> 
+    <globals background="0.0 0.0 0.0 0.0" drawmode="fill" shading="gouraud" cullface="none" cullorder="CCW" /> 
+     
+    <!-- bloco de camaras: o atributo "initial" identifica a camara/ponto de vista inicial --> 
+    <cameras initial="camera1" >
+        <perspective id="camera1" near="-20" far="20" angle="40.0" pos="20 20 20" target="0.0 0.0 0.0" />
+		<ortho id="camera2" near="1.0" far="2.0" left="1" right="1" top="1" bottom="1" />
+		<perspective id="camera3" near="0.1" far="300" angle="35" pos="30 10 35" target="0 0 0" /> 
+		<ortho id="camera4" near="-20" far="500.0" left="0.0" right="10.0" top="10.0" bottom="0.0" /> 
+    </cameras> 
+   
+
+    <!-- bloco de iluminacao; segue os parametros do OpenGL --> 
+    <lighting doublesided="true" local="true" enabled="true" ambient="0.1 0.1 0.1 1.0" > 
+             <!-- Deve existir um ou mais blocos "light" --> 
+            <!-- Os identificadores "id" nao podem ser repetidos --> 
+            <omni id="light0" enabled="true"
+                location="-12.5 20.0 10.0"
+                ambient="1.0 1.0 1.0 0.0" 
+                diffuse="1.0 1.0 1.0 0.0"
+                specular="1.0 1.0 1.0 0.0" 
+            /> 
+			
+			<omni id="light1" enabled="true" 
+                location="12.5 20.0 10.0"
+                ambient="1.0 1.0 1.0 0.0" 
+                diffuse="1.0 1.0 1.0 0.0"
+                specular="1.0 1.0 1.0 0.0" 
+            /> 
+			
+			<omni id="light2" enabled="true" 
+                location="12.5 20.0 -10.0"
+                ambient="1.0 1.0 1.0 0.0" 
+                diffuse="1.0 1.0 1.0 0.0"
+                specular="1.0 1.0 1.0 0.0" 
+            />
+			
+			<omni id="light3" enabled="true" 
+                location="-12.5 20.0 -10.0"
+                ambient="1.0 1.0 1.0 0.0" 
+                diffuse="1.0 1.0 1.0 0.0"
+                specular="1.0 1.0 1.0 0.0" 
+            /> 
+
+    </lighting> 
+
+    <!-- bloco de texturas. Este bloco tem de existir mas pode estar vazio, se nao forem usadas texturas --> 
+    <textures>
+      <texture id="board_tex_2" file="AngryBirds/angrybirds_tex_2.jpg" />
+      <texture id="board" file="AngryBirds/angrybirds.jpg" />
+    </textures>
+
+    <!-- bloco de materiais; --> 
+    <appearances>
+		
+		<appearance id="board_app_2" 
+            emissive="0.0 0.0 0.0 0.0" 
+            ambient="0.19225 0.19225 0.19225 0.0" 
+            diffuse="0.50754 0.50754 0.50754 0.0" 
+            specular="0.508273 0.508273 0.508273 0.0" 
+            shininess="0.4" 
+           
+            textureref="board_tex_2" 
+            texlength_s="1" 
+            texlength_t="1"
+        />
+		
+		<appearance id="board_app" 
+            emissive="0.0 0.0 0.0 0.0" 
+            ambient="0.25 0.25 0.25 0.0" 
+            diffuse="0.4 0.4 0.4 0.0" 
+            specular="0.774597 0.774597 0.774597 0.0" 
+            shininess="0.4" 
+           
+            textureref="board" 
+            texlength_s="1" 
+            texlength_t="1"
+        />
+    </appearances> 
+
+    <!-- bloco do grafo; "rootid" identifica o no de raiz --> 
+    <graph rootid="Twixt">
+		
+		<node id="Twixt" >
+			<transforms>
+                <translate to="25.0 0.0 25.0" />
+			</transforms>
+			
+			
+			<children>
+				<noderef id="Board"/>
+			</children>
+		</node>
+		
+		<node id="Board"> 
+            <transforms>
+            </transforms>
+			
+			<appearanceref id="board_app_2" /> 
+			
+            <children> 
+				<noderef id="BD1"/>
+				<noderef id="BD2"/>
+				<noderef id="BD3"/>
+				<noderef id="BD4"/>
+				<noderef id="BD5"/>
+            </children>
+        </node>
+		
+		<node id="BD1"> 
+            <transforms>
+                <scale factor="50.0 1.0 50.0" />
+            </transforms>
+			
+			<appearanceref id="board_app" /> 
+			
+            <children>
+			<plane parts="100" />
+            </children> 
+        </node>
+		
+		<node id="BD2"> 
+            <transforms>
+                <translate to="0.0 -0.5 -25.0" />
+                <scale factor="50.0 1.0 1.0" />
+                <rotate axis="x" angle="-90" />
+            </transforms>
+			
+            <children>
+			<plane parts="100" />
+            </children> 
+        </node>
+		
+		<node id="BD3"> 
+            <transforms>
+                <translate to="0.0 -0.5 25.0" />
+                <scale factor="50.0 1.0 1.0" />
+                <rotate axis="x" angle="90" />
+            </transforms>
+			
+            <children>
+			<plane parts="100" />
+            </children> 
+        </node>
+		
+		<node id="BD4"> 
+            <transforms>
+                <translate to="25.0 -0.5 0.0" />
+                <scale factor="1.0 1.0 50.0" />
+                <rotate axis="z" angle="-90" />
+            </transforms>
+			
+            <children>
+			<plane parts="100" />
+            </children> 
+        </node>
+		
+		<node id="BD5"> 
+            <transforms>
+                <translate to="-25.0 -0.5 0.0" />
+                <scale factor="1.0 1.0 50.0" />
+                <rotate axis="z" angle="90" />
+            </transforms>
+			
+            <children>
+			<plane parts="100" />
+            </children> 
+        </node>
+    </graph> 
+</yaf> 

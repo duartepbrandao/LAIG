@@ -420,7 +420,6 @@ void XMLScene::doGraphElement(){
 								filename = new char[str.length() + 1];
 								strcpy(filename, str.c_str());
 								// do stuff
-								printf("\n\n\n\n filename = %s \n\n\n\n", filename);
 								obj=new Obj::File();
 								obj->Load(filename);
 								//obj2=new Object(filename);

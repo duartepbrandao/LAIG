@@ -131,43 +131,44 @@ void LightingScene::display()
 	glPopMatrix();
 	// ---- END Primitive drawing section
 
-	//Picking
-	// Example 1: simple naming
-	glPushMatrix();
-
-	glPushName(-1);		// Load a default name
-
-	for (int i=0; i< NUM_OBJS;i++)
-	{
+	GLint mode;
+	glGetIntegerv(GL_RENDER_MODE, &mode);
+	if(mode!=GL_RENDER){
+		//Picking
+		// Example 1: simple naming
 		glPushMatrix();
-		glLoadName(i);		//replaces the value on top of the name stack
-		glPopMatrix();
-	}
-	glPopMatrix();
-	glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-	glEnable(GL_BLEND); //Enable blending.
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	for (int r=0; r < NUM_ROWS; r++)
-	{
-		glPushMatrix();
-		glScaled(1.5,1.0,1.5);
-		glTranslatef(r*2.57+3.05, 0.01, 0.0);
-		glRotated(90, 0, 0, 1);
-		glLoadName(r);
-		for (int c=0; c < NUM_COLS; c++)
+
+		glPushName(-1);		// Load a default name
+
+		for (int i=0; i< NUM_OBJS;i++)
 		{
 			glPushMatrix();
-			glTranslatef(0,0.01,c*2.57+3.1);
-			glRotatef(90,0,1,0);
-			glPushName(c);
-			object->draw();
-			glPopName();
+			glLoadName(i);		//replaces the value on top of the name stack
 			glPopMatrix();
 		}
 		glPopMatrix();
 		glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+		for (int r=0; r < NUM_ROWS; r++)
+		{
+			glPushMatrix();
+			glScaled(1.5,1.0,1.5);
+			glTranslatef(r*2.57+3.05, 0.01, 0.0);
+			glRotated(90, 0, 0, 1);
+			glLoadName(r);
+			for (int c=0; c < NUM_COLS; c++)
+			{
+				glPushMatrix();
+				glTranslatef(0,0.01,c*2.57+3.1);
+				glRotatef(90,0,1,0);
+				glPushName(c);
+				object->draw();
+				glPopName();
+				glPopMatrix();
+			}
+			glPopMatrix();
+			glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+		}
 	}
-	glDisable(GL_BLEND);
 
 	// ---- END feature demos
 
@@ -185,10 +186,13 @@ void LightingScene::display()
 			peca=new Peca("Classic/classic.yaf", 1, "Classic/topo_1.jpg", "Classic/base.jpg");
 		}else if(app==1){
 			loadTheme("Mario/mario.yaf");
-			peca=new Peca("Mario/mario.yaf", 1, "Mario/topo_1.jpg", "Mario/base.jpg");
+			peca=new Peca("Mario/KoopaTropa.obj","Mario/mario.yaf", 1, "Mario/KoopaTropa.jpg", "Mario/base_2.jpg");
 		}else if(app==2){
 			loadTheme("DragonBall/dragonball.yaf");
-			peca=new Peca("DragonBall/mario.yaf", 1, "DragonBall/topo_1.jpg", "DragonBall/topo_1.jpg");
+			peca=new Peca("DragonBall/mario.yaf", 1, "DragonBall/FourStars.jpg", "DragonBall/topo_1.jpg");
+		}else if(app==3){
+			loadTheme("AngryBirds/angrybirds.yaf");
+			peca=new Peca("AngryBirds/pig.obj","AngryBirds/angrybirds.yaf", 1, "AngryBirds/pig.jpg", "AngryBirds/base_2.jpg");
 		}
 		init();
 		appChoose=true;

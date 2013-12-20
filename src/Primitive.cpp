@@ -1,11 +1,5 @@
 #include "Primitive.h"
 
-// Coefficients for material A
-float ambA[3] = {0.05375, 0.05, 0.06625};
-float difA[3] = {0.18275, 0.17, 0.22525};
-float specA[3] = {0.332741, 0.328634, 0.346435};
-float shininessA = 0.6;
-
 Primitive::Primitive()
 {
 	s=1;
@@ -476,40 +470,3 @@ void Pwaterline::update(unsigned long systm){
 	}
 }
 
-//peao de jogo
-Peca::Peca(void)
-{
-
-}
-
-Peca::Peca(std::string theme, int playerNumber, std::string player, std::string base_name){
-	this->theme=theme;
-	this->playerNumber=playerNumber;
-	this->player=player;
-	this->base_name=base_name;
-
-	base=new Pcylinder(0.5, 0.5, 1.0, 20, 20);
-	top=new Psphere(0.5,10,10);
-	
-	top_app = new CGFappearance(ambA,difA,specA,shininessA);
-	top_app->setTexture(player);
-
-	base_app = new CGFappearance(ambA,difA,specA,shininessA);
-	base_app->setTexture(base_name);
-}
-
-void Peca::draw(){
-	glPushMatrix();
-	glTranslated(0,4,0);
-	glScaled(0.5,4,0.5);
-	glRotated(90,1,0,0);
-	base_app->apply();
-	base->draw();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslated(0,4,0);
-	top_app->apply();
-	top->draw();
-	glPopMatrix();
-}

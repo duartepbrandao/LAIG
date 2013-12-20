@@ -59,6 +59,7 @@ void TPinterface::initGUI()
 	themeslistbox->add_item(0, "classic");
 	themeslistbox->add_item(1, "mario");
 	themeslistbox->add_item(2, "dragon ball");
+	themeslistbox->add_item(3, "angry birds");
 }
 
 void TPinterface::processGUI(GLUI_Control *ctrl)

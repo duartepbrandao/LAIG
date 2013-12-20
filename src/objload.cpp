@@ -1464,3 +1464,75 @@ vinf: ;
 		}
 	}
 }
+
+// Coefficients for material A
+float ambA[3] = {1.0, 1.0, 1.0};
+float difA[3] = {1.0, 1.0, 1.0};
+float specA[3] = {1.0, 1.0, 1.0};
+float shininessA = 60;
+
+//peao de jogo
+Peca::Peca(void)
+{
+
+}
+
+Peca::Peca(std::string theme, int playerNumber, std::string player, std::string base_name){
+	this->theme=theme;
+	this->playerNumber=playerNumber;
+	this->player=player;
+	this->base_name=base_name;
+	filename="";
+
+	base=new Pcylinder(0.5, 0.5, 1.0, 30, 30);
+	top=new Psphere(0.5,10,10);
+	
+	top_app = new CGFappearance(ambA,difA,specA,100);
+	top_app->setTexture(player);
+
+	base_app = new CGFappearance(ambA,difA,specA,shininessA);
+	base_app->setTexture(base_name);
+}
+	
+Peca::Peca(char* filename, std::string theme, int playerNumber, std::string player, std::string base_name){
+	this->theme=theme;
+	this->playerNumber=playerNumber;
+	this->player=player;
+	this->base_name=base_name;
+	this->filename=filename;
+
+	base=new Pcylinder(0.5, 0.5, 1.0, 30, 30);
+
+	top2=new Obj::File();
+	top2->Load(filename);
+	
+	top_app = new CGFappearance(ambA,difA,specA,100);
+	top_app->setTexture(player);
+
+	base_app = new CGFappearance(ambA,difA,specA,shininessA);
+	base_app->setTexture(base_name);
+}
+
+void Peca::draw(){
+	glPushMatrix();
+	glTranslated(0,4,0);
+	glScaled(0.5,4,0.5);
+	glRotated(90,1,0,0);
+	base_app->apply();
+	base->draw();
+	glPopMatrix();
+
+	if(filename==""){
+		glPushMatrix();
+		glTranslated(0,4,0);
+		glRotated(180,1,0,0);
+		top_app->apply();
+		top->draw();
+		glPopMatrix();
+	}else{
+		glPushMatrix();
+		top_app->apply();
+		top2->draw();
+		glPopMatrix();
+	}
+}
