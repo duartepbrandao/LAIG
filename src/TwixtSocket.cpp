@@ -2,7 +2,7 @@
 
 SOCKET m_socket;
 
-TwixtSocket::TwixtSocket(char* gameMode){
+TwixtSocket::TwixtSocket(){
 	socketConnect();
 	char *s = "play('PlayerVsPlayer', 12).\n";
 	envia(s, strlen(s));

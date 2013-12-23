@@ -1,18 +1,18 @@
 #ifndef TWIXTSOCKET_H
 #define TWIXTSOCKET_H
 
-#include <iostream>
 #include <winsock2.h>
-
-using namespace std;
-
+#include <iostream>
 
 #define IPADDRESS "127.0.0.1"
 #define PORT 60070
 
+using namespace std;
+
+
 class TwixtSocket{
 public:
-	TwixtSocket(char* gameMode);
+	TwixtSocket();
 
 	bool socketConnect();
 	void envia(char *s, int len);

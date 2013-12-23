@@ -1,11 +1,11 @@
 #include "Camera.h"
 
 std::string Camera::initial;
-Camera::Camera(std::string id, float near, float far,std::string initial)
+Camera::Camera(std::string id, float n, float f,std::string initial)
 {	this->initial=initial;
 	this->id=id;
-	this->near=near;
-	this->far=far;
+	this->n=n;
+	this->f=f;
 }
 std::string Camera::getInicial(){
 	return initial;
@@ -19,15 +19,15 @@ std::string Camera::getID(){
 	return id;
 }
 	
-float Camera::getNear(){
-	return near;
+float Camera::getn(){
+	return n;
 }
 	
-float Camera::getFar(){
-	return far;
+float Camera::getf(){
+	return f;
 }
 
-OrthoCamera::OrthoCamera(std::string id, float near, float far, float left, float right, float top , float bottom, std::string initial):Camera(id, near, far,initial){
+OrthoCamera::OrthoCamera(std::string id, float n, float f, float left, float right, float top , float bottom, std::string initial):Camera(id, n, f,initial){
 	this->left=left;
 	this->right=right;
 	this->top=top;
@@ -56,7 +56,7 @@ void OrthoCamera::applyView(){
 
 }
 
-PerspectiveCamera::PerspectiveCamera(std::string id, float near, float far, float angle, float* pos, float* target, std::string initial):Camera(id, near, far, initial){
+PerspectiveCamera::PerspectiveCamera(std::string id, float n, float f, float angle, float* pos, float* target, std::string initial):Camera(id, n, f, initial){
 	this->angle=angle;
 	for(int i = 0;i<3;i++){
 		this->pos[i]=pos[i];
@@ -105,7 +105,7 @@ void PerspectiveCamera::updateProjectionMatrix(int width, int height){
 	float aspect = (float) width / (float) height;
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(getAngle(),aspect,getNear(), getFar());
+	gluPerspective(getAngle(),aspect,getn(), getf());
 }
 
 
@@ -113,5 +113,5 @@ void OrthoCamera::updateProjectionMatrix(int width, int height){
 	float aspect = (float) width / (float) height;
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(getLeft(),getRight(),getBottom(),getTop(),getNear(),getFar());
+	glOrtho(getLeft(),getRight(),getBottom(),getTop(),getn(),getf());
 }
