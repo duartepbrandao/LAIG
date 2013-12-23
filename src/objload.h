@@ -692,20 +692,30 @@ class Peca:public Primitive{
 	char *filename;
 	int playerNumber;
 
+	float posx, posy;
+
 public:
 	Peca(void);
+	Peca(Peca *p);
 	Peca::Peca(std::string theme, int playerNumber, std::string player, std::string base_name);
 	Peca::Peca(char* filename, std::string theme, int playerNumber, std::string player, std::string base_name);
 
-	std::string getPlayer1();
-	std::string getPlayer2();
-	std::string getBase1();
-	std::string getBase2();
+	Psphere* getSphere(){return top;}
+	Obj::File* getOBJ(){return top2;}
+	Pcylinder* getCylinder(){return base;}
+	char* getFilename(){return filename;}
+	std::string getTheme(){return theme;}
+	std::string getPlayer(){return player;}
+	std::string getBase(){return base_name;}
+	void changePecaTheme(Peca *p);
+	float getPosX(){return posx;}
+	float getPosY(){return posy;}
+	int getPlayerNumber(){return playerNumber;}
 
-	void setPlayer1(std::string player1);
-	void setPlayer2(std::string player2);
-	void setBase1(std::string base1);
-	void setBase2(std::string base2);
+	void setPlayer(std::string player){this->player=player;}
+	void setBase(std::string base){this->base_name=base;}
+	void setPosx(float x){posx=x;}
+	void setPosy(float y){posy=y;}
 
 	void draw();
 };

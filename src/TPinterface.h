@@ -6,7 +6,10 @@
 
 class TPinterface: public CGFinterface {
 	public:
+
 		int app;
+
+		Peca *c1, *c2, *m1, *m2, *d1, *d2, *a1, *a2;
 
 		TPinterface();
 
@@ -18,6 +21,9 @@ class TPinterface: public CGFinterface {
 		void processHits(GLint hits, GLuint buffer[]); 
 
 		int testVar;
+
+		void loadPecasPlayer1(float deltaX, float deltaY);
+		void loadPecasPlayer2(float deltaX, float deltaY);
 };
 
 

@@ -13,7 +13,6 @@
 class LightingScene : public CGFscene
 {
 public:
-	float deltaX, deltaY, x, y;
 
 	void init();
 	void display();
@@ -44,7 +43,19 @@ public:
 	Peca* peca;
 	CGFobject* object;//picking
 	vector<Appearence*> apps;
-	vector<Peca> pecas;
+	Peca *c1, *c2, *m1, *m2, *d1, *d2, *a1, *a2;
+	vector<Peca*> pecas;
+	vector<LightingScene*> themes;
+	void addthemes(LightingScene* ls){themes.push_back(ls);}
+
+	Globals* getGlobals(){return globals;}
+	vector<Camera*> getCameras(){return cameras;}
+	vector<Light*> getLights(){return lights;}
+	std::string getId(){return id;}
+	map<string, Node*> getScene(){return scene;}
+	map<string, Appearence*> getAppearances(){return appearances;}
+	map<string, Animation*> getAnimations(){return animations;}
+
 
 	LightingScene(vector<Light*> lights,Globals* globals, vector<Camera*> camera, std::string id, map<string, Node*> scene, map<string, Appearence*> appearances, map<string, Animation*> animations);
 	~LightingScene();
@@ -58,7 +69,8 @@ public:
 
 	void update(unsigned long sysTm);
 
-	void loadTheme(char* filename);
+	void loadTheme(int num);
+	void loadPecaTheme();
 };
 
 #endif

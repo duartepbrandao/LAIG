@@ -114,7 +114,7 @@
     <!-- bloco do grafo; "rootid" identifica o no de raiz --> 
     <graph rootid="Twixt">
 		
-		<node id="Twixt" >
+		<node id="Twixt" displaylist="true">
 			<transforms>
                 <translate to="25.0 0.0 25.0" />
 			</transforms>

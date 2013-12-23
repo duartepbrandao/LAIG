@@ -1,5 +1,4 @@
 #include "TPinterface.h"
-#include "PickScene.h"
 
 // buffer to be used to store the hits during picking
 #define BUFSIZE 256
@@ -8,6 +7,15 @@ GLuint selectBuf[BUFSIZE];
 TPinterface::TPinterface()
 {
 	testVar=0;
+	
+	c1 = new Peca("Classic/classic.yaf", 1, "Classic/player1.jpg", "Classic/player1.jpg");
+	c2 = new Peca("Classic/classic.yaf", 2, "Classic/player2.jpg", "Classic/player2.jpg");
+	m1 = new Peca("Mario/KoopaTropa.obj","Mario/mario.yaf", 1, "Mario/KoopaTropa.jpg", "Mario/base_2.jpg");
+	m2 = new Peca("Mario/goomba.obj","Mario/mario.yaf", 2, "Mario/goomba.jpg", "Mario/base.jpg");
+	d1 = new Peca("DragonBall/dragonball.yaf", 1, "DragonBall/player1.jpg", "DragonBall/player1.jpg");
+	d2 = new Peca("DragonBall/dragonball.yaf", 2, "DragonBall/player2.jpg", "DragonBall/player2.jpg");
+	a1 = new Peca("AngryBirds/red.obj","AngryBirds/angrybirds.yaf", 1, "AngryBirds/red.jpg", "AngryBirds/base.jpg");
+	a2 = new Peca("AngryBirds/pig.obj","AngryBirds/angrybirds.yaf", 2, "AngryBirds/pig.jpg", "AngryBirds/base_2.jpg");
 }
 
 void TPinterface::initGUI()
@@ -53,7 +61,7 @@ void TPinterface::initGUI()
 	addRadioButtonToGroup(radioDrawmode,"Fill");
 
 	addColumn();
-	
+
 	GLUI_Panel *themesPanel= addPanel("Themes",1);
 	GLUI_Listbox *themeslistbox = addListboxToPanel(themesPanel,"Themes",&((LightingScene*) scene)->app,4);
 	themeslistbox->add_item(0, "classic");
@@ -158,7 +166,7 @@ void TPinterface::processHits (GLint hits, GLuint buffer[])
 		for (int j=0; j < num; j++) 
 			ptr++;
 	}
-	
+
 	// if there were hits, the one selected is in "selected", and it consist of nselected "names" (integer ID's)
 	if (selected!=NULL)
 	{
@@ -168,11 +176,61 @@ void TPinterface::processHits (GLint hits, GLuint buffer[])
 		for (int i=0; i<nselected; i++){
 			printf("%d ",selected[i]);
 		}
-		((LightingScene*) scene)->deltaX=selected[0]*2.57*1.5+3.05+1.5/2;
-		((LightingScene*) scene)->deltaY=selected[1]*2.57*1.5+3.1+1.5/2;
+		float deltaX=selected[0]*2.57*1.5+3.05+1.5/2;
+		float deltaY=selected[1]*2.57*1.5+3.1+1.5/2;
+
+		if(!((LightingScene*) scene)->pecas.empty()){
+			if(((LightingScene*) scene)->pecas[((LightingScene*) scene)->pecas.size()-1]->getPlayerNumber()==2){
+				loadPecasPlayer1(deltaX, deltaY);
+			}else{
+				loadPecasPlayer2(deltaX, deltaY);
+			}
+		}else{
+			loadPecasPlayer1(deltaX, deltaY);
+		}
+
 		printf("\n");
 	}
 	else
 		printf("Nothing selected while picking \n");	
+}
+
+void TPinterface::loadPecasPlayer1(float deltaX, float deltaY){
+	switch(((LightingScene*) scene)->app){
+	case 0:
+		((LightingScene*) scene)->pecas.push_back(new Peca(c1));
+		break;
+	case 1:
+		((LightingScene*) scene)->pecas.push_back(new Peca(m1));
+		break;
+	case 2:
+		((LightingScene*) scene)->pecas.push_back(new Peca(d1));
+		break;
+	case 3:
+		((LightingScene*) scene)->pecas.push_back(new Peca(a1));
+		break;
+	}
+	((LightingScene*) scene)->pecas[((LightingScene*) scene)->pecas.size()-1]->setPosx(deltaX);
+	((LightingScene*) scene)->pecas[((LightingScene*) scene)->pecas.size()-1]->setPosy(deltaY);
+}
+
+void TPinterface::loadPecasPlayer2(float deltaX, float deltaY){
+	
+	switch(((LightingScene*) scene)->app){
+	case 0:
+		((LightingScene*) scene)->pecas.push_back(new Peca(c2));
+		break;
+	case 1:
+		((LightingScene*) scene)->pecas.push_back(new Peca(m2));
+		break;
+	case 2:
+		((LightingScene*) scene)->pecas.push_back(new Peca(d2));
+		break;
+	case 3:
+		((LightingScene*) scene)->pecas.push_back(new Peca(a2));
+		break;
+	}
+	((LightingScene*) scene)->pecas[((LightingScene*) scene)->pecas.size()-1]->setPosx(deltaX);
+	((LightingScene*) scene)->pecas[((LightingScene*) scene)->pecas.size()-1]->setPosy(deltaY);
 }
 

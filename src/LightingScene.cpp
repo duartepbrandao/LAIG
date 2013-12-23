@@ -33,19 +33,25 @@ LightingScene::LightingScene(vector<Light*> lights, Globals* globals,vector<Came
 	this->animations=animations;
 	drawmode=this->globals->getDrawMode()-GL_POINT;
 
-	x=deltaX=3.05+1.5/2;
-	y=deltaY=3.1+1.5/2;
+	/*x=deltaX=3.05+1.5/2;
+	y=deltaY=3.1+1.5/2;*/
 
-	//obj = new Object("models/MultiTextures.obj");
-	//pecas de jogo
-	peca=new Peca("Classic/classic.yaf", 1, "Classic/topo_1.jpg", "Classic/base.jpg");
+	c1 = new Peca("Classic/classic.yaf", 1, "Classic/player1.jpg", "Classic/player1.jpg");
+	c2 = new Peca("Classic/classic.yaf", 2, "Classic/player2.jpg", "Classic/player2.jpg");
+	m1 = new Peca("Mario/KoopaTropa.obj","Mario/mario.yaf", 1, "Mario/KoopaTropa.jpg", "Mario/base_2.jpg");
+	m2 = new Peca("Mario/goomba.obj","Mario/mario.yaf", 2, "Mario/goomba.jpg", "Mario/base.jpg");
+	d1 = new Peca("DragonBall/dragonball.yaf", 1, "DragonBall/player1.jpg", "DragonBall/player1.jpg");
+	d2 = new Peca("DragonBall/dragonball.yaf", 2, "DragonBall/player2.jpg", "DragonBall/player2.jpg");
+	a1 = new Peca("AngryBirds/red.obj","AngryBirds/angrybirds.yaf", 1, "AngryBirds/red.jpg", "AngryBirds/base.jpg");
+	a2 = new Peca("AngryBirds/pig.obj","AngryBirds/angrybirds.yaf", 2, "AngryBirds/pig.jpg", "AngryBirds/base_2.jpg");
+
+	/*peca=new Peca("Classic/classic.yaf", 1, "Classic/topo_1.jpg", "Classic/base.jpg");*/
 	object=new ExampleObject();
-	//peca2=new Pflag();
 }
 
 void LightingScene::init() 
 {
-	
+
 
 	//GLOBALS
 	glClearColor (globals->getBackground(0), globals->getBackground(1), globals->getBackground(2), globals->getBackground(3));
@@ -101,12 +107,12 @@ void LightingScene::display()
 	activateCamera(camera);
 	activeCamera->applyView();
 	//cameras
-	
+
 	//GLOBALS
 	glPolygonMode(GL_FRONT_AND_BACK,GL_POINT+drawmode);
 
 	//LIGHTS
-	for(unsigned int i=0;i<lightState.size();i++){
+	for(int i=0;i<lightState.size();i++){
 		if(lightState[i]==0){
 			lights[i]->disable();
 		}else{
@@ -123,12 +129,12 @@ void LightingScene::display()
 
 	// ---- BEGIN Primitive drawing section
 	drawAllThings(id);
-	x=deltaX;
-	y=deltaY;
-	glPushMatrix();
-	glTranslated(x, 0.0, y);
-	peca->draw();
-	glPopMatrix();
+	for(unsigned int i=0; i<pecas.size();i++){
+		glPushMatrix();
+		glTranslated(pecas[i]->getPosX(), 0.0, pecas[i]->getPosY());
+		pecas[i]->draw();
+		glPopMatrix();
+	}
 	// ---- END Primitive drawing section
 
 	GLint mode;
@@ -169,7 +175,6 @@ void LightingScene::display()
 			glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 		}
 	}
-
 	// ---- END feature demos
 
 	//change theme
@@ -180,27 +185,16 @@ void LightingScene::display()
 		scene.clear();
 		appearances.clear();
 		animations.clear();
-
-		if(app==0){
-			loadTheme("Classic/classic.yaf");
-			peca=new Peca("Classic/classic.yaf", 1, "Classic/topo_1.jpg", "Classic/base.jpg");
-		}else if(app==1){
-			loadTheme("Mario/mario.yaf");
-			peca=new Peca("Mario/KoopaTropa.obj","Mario/mario.yaf", 1, "Mario/KoopaTropa.jpg", "Mario/base_2.jpg");
-		}else if(app==2){
-			loadTheme("DragonBall/dragonball.yaf");
-			peca=new Peca("DragonBall/mario.yaf", 1, "DragonBall/FourStars.jpg", "DragonBall/topo_1.jpg");
-		}else if(app==3){
-			loadTheme("AngryBirds/angrybirds.yaf");
-			peca=new Peca("AngryBirds/pig.obj","AngryBirds/angrybirds.yaf", 1, "AngryBirds/pig.jpg", "AngryBirds/base_2.jpg");
-		}
+		
+		loadTheme(app);
+		loadPecaTheme();
 		init();
 		appChoose=true;
 	}
 
 	glutSwapBuffers();
 }
-	
+
 void LightingScene::applyTextures(string id){
 	Node* node=this->scene[id];
 
@@ -223,15 +217,46 @@ void LightingScene::applyTextures(string id){
 }
 
 
-void LightingScene::loadTheme(char* filename){
-	XMLScene xmlscene=XMLScene(filename);
-	this->lights= xmlscene.getLights();
-	this->globals=xmlscene.getGlobals();
-	this->cameras=xmlscene.getCameras();
-	this->id=xmlscene.getRootID();
-	this->scene=xmlscene.getScene();
-	this->appearances=xmlscene.getAppearances();
-	this->animations=xmlscene.getAnimations();
+void LightingScene::loadTheme(int num){
+	//XMLScene xmlscene=XMLScene(filename);
+	this->lights= themes[num]->getLights();
+	this->globals=themes[num]->getGlobals();
+	this->cameras=themes[num]->getCameras();
+	this->id=themes[num]->getId();
+	this->scene=themes[num]->getScene();
+	this->appearances=themes[num]->getAppearances();
+	this->animations=themes[num]->getAnimations();
+}
+
+void LightingScene::loadPecaTheme(){
+
+	for(int i=0;i<pecas.size();i++){
+		if(app==0){
+			if(pecas[i]->getPlayerNumber()==1){
+				pecas[i]->changePecaTheme(c1);
+			}else{
+				pecas[i]->changePecaTheme(c2);
+			}
+		}else if(app==1){
+			if(pecas[i]->getPlayerNumber()==1){
+				pecas[i]->changePecaTheme(m1);
+			}else{
+				pecas[i]->changePecaTheme(m2);
+			}
+		}else if(app==2){
+			if(pecas[i]->getPlayerNumber()==1){
+				pecas[i]->changePecaTheme(d1);
+			}else{
+				pecas[i]->changePecaTheme(d2);
+			}
+		}else if(app==3){
+			if(pecas[i]->getPlayerNumber()==1){
+				pecas[i]->changePecaTheme(a1);
+			}else{
+				pecas[i]->changePecaTheme(a2);
+			}
+		}
+	}
 }
 
 void LightingScene::drawPrimitives(string id){

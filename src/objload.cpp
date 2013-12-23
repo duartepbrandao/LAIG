@@ -1477,6 +1477,25 @@ Peca::Peca(void)
 
 }
 
+
+Peca::Peca(Peca *p){
+	this->theme=p->getTheme();
+	this->playerNumber=p->getPlayerNumber();
+	this->player=p->getPlayer();
+	this->base_name=p->getBase();
+	filename=p->getFilename();
+
+	base=p->getCylinder();
+	top=p->getSphere();
+	top2=p->getOBJ();
+	
+	top_app = new CGFappearance(ambA,difA,specA,100);
+	top_app->setTexture(player);
+
+	base_app = new CGFappearance(ambA,difA,specA,shininessA);
+	base_app->setTexture(base_name);
+}
+
 Peca::Peca(std::string theme, int playerNumber, std::string player, std::string base_name){
 	this->theme=theme;
 	this->playerNumber=playerNumber;
@@ -1505,6 +1524,24 @@ Peca::Peca(char* filename, std::string theme, int playerNumber, std::string play
 
 	top2=new Obj::File();
 	top2->Load(filename);
+	
+	top_app = new CGFappearance(ambA,difA,specA,100);
+	top_app->setTexture(player);
+
+	base_app = new CGFappearance(ambA,difA,specA,shininessA);
+	base_app->setTexture(base_name);
+}
+	
+void Peca::changePecaTheme(Peca* p){
+	this->theme=p->getTheme();
+	this->playerNumber=p->getPlayerNumber();
+	this->player=p->getPlayer();
+	this->base_name=p->getBase();
+	filename=p->getFilename();
+
+	base=p->getCylinder();
+	top=p->getSphere();
+	top2=p->getOBJ();
 	
 	top_app = new CGFappearance(ambA,difA,specA,100);
 	top_app->setTexture(player);
