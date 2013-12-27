@@ -44,6 +44,7 @@ LightingScene::LightingScene(vector<Light*> lights, Globals* globals,vector<Came
 	d2 = new Peca("DragonBall/dragonball.yaf", 2, "DragonBall/player2.jpg", "DragonBall/player2.jpg");
 	a1 = new Peca("AngryBirds/red.obj","AngryBirds/angrybirds.yaf", 1, "AngryBirds/red.jpg", "AngryBirds/base.jpg");
 	a2 = new Peca("AngryBirds/pig.obj","AngryBirds/angrybirds.yaf", 2, "AngryBirds/pig.jpg", "AngryBirds/base_2.jpg");
+	sombra= new Peca("Classic/classic.yaf", 1, "Classic/player1.jpg", "Classic/player1.jpg");
 
 	/*peca=new Peca("Classic/classic.yaf", 1, "Classic/topo_1.jpg", "Classic/base.jpg");*/
 	object=new ExampleObject();
@@ -136,6 +137,15 @@ void LightingScene::display()
 		glPopMatrix();
 	}
 	// ---- END Primitive drawing section
+
+	glEnable(GL_BLEND);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glPushMatrix();
+	glTranslated(sombra->getPosX(), 0.0, sombra->getPosY());
+	sombra->draw();
+	glPopMatrix();
+	glDisable(GL_BLEND);
 
 	GLint mode;
 	glGetIntegerv(GL_RENDER_MODE, &mode);

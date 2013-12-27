@@ -18,7 +18,10 @@ class TPinterface: public CGFinterface {
 
 		virtual void processMouse(int button, int state, int x, int y);	
 		void performPicking(int x, int y);
+		void performPicking2(int x, int y);
+		virtual void processPassiveMouseMoved(int x, int y);
 		void processHits(GLint hits, GLuint buffer[]); 
+		void processHits2(GLint hits, GLuint buffer[]); 
 
 		int testVar;
 
