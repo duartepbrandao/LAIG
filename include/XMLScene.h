@@ -21,7 +21,7 @@
 class XMLScene
 {
 public:
-
+	static int num;
 	//Globals
 	Globals* globals;
 	Globals* getGlobals();

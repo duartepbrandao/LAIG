@@ -1,6 +1,7 @@
 #ifndef LightingScene_H
 #define LightingScene_H
 
+#include "TwixtSocket.h"
 #include "CGFscene.h"
 #include "CGFappearance.h"
 #include "XMLScene.h"

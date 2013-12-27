@@ -3,13 +3,13 @@
 SOCKET m_socket;
 
 TwixtSocket::TwixtSocket(){
-	socketConnect();
-	char *s = "play('PlayerVsPlayer', 12).\n";
+	/*socketConnect();
+	char *s = "play('PlayerVsPlayer',12).\n";
 	envia(s, strlen(s));
 	char ans[128];
 	recebe(ans);
 	quit();
-	getchar();
+	getchar();*/
 }
 
 bool TwixtSocket::socketConnect() {// Initialize Winsock.

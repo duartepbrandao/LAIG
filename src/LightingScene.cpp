@@ -6,6 +6,7 @@
 #include <math.h>
 #include "ExampleObject.h"
 
+
 #define BOARD_HEIGHT 6.0
 #define BOARD_WIDTH 6.4
 #define NUM_OBJS 12*12
@@ -33,9 +34,7 @@ LightingScene::LightingScene(vector<Light*> lights, Globals* globals,vector<Came
 	this->animations=animations;
 	drawmode=this->globals->getDrawMode()-GL_POINT;
 
-	/*x=deltaX=3.05+1.5/2;
-	y=deltaY=3.1+1.5/2;*/
-
+	//Peca
 	c1 = new Peca("Classic/classic.yaf", 1, "Classic/player1.jpg", "Classic/player1.jpg");
 	c2 = new Peca("Classic/classic.yaf", 2, "Classic/player2.jpg", "Classic/player2.jpg");
 	m1 = new Peca("Mario/KoopaTropa.obj","Mario/mario.yaf", 1, "Mario/KoopaTropa.jpg", "Mario/base_2.jpg");
@@ -45,7 +44,7 @@ LightingScene::LightingScene(vector<Light*> lights, Globals* globals,vector<Came
 	a1 = new Peca("AngryBirds/red.obj","AngryBirds/angrybirds.yaf", 1, "AngryBirds/red.jpg", "AngryBirds/base.jpg");
 	a2 = new Peca("AngryBirds/pig.obj","AngryBirds/angrybirds.yaf", 2, "AngryBirds/pig.jpg", "AngryBirds/base_2.jpg");
 
-	/*peca=new Peca("Classic/classic.yaf", 1, "Classic/topo_1.jpg", "Classic/base.jpg");*/
+	//Para o picking
 	object=new ExampleObject();
 }
 
@@ -216,9 +215,7 @@ void LightingScene::applyTextures(string id){
 	}
 }
 
-
 void LightingScene::loadTheme(int num){
-	//XMLScene xmlscene=XMLScene(filename);
 	this->lights= themes[num]->getLights();
 	this->globals=themes[num]->getGlobals();
 	this->cameras=themes[num]->getCameras();
@@ -340,7 +337,6 @@ void LightingScene::drawAllThings(string id){
 		glCallList(node->getDisplayValue());
 	}
 }
-
 
 void LightingScene::update(unsigned long sysTm){
 	map<string,Node*>:: iterator it=scene.begin();

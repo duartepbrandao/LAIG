@@ -14,10 +14,10 @@ class TwixtSocket{
 public:
 	TwixtSocket();
 
-	bool socketConnect();
-	void envia(char *s, int len);
-	void recebe(char *ans);
-	void quit();
+	static bool socketConnect();
+	static void envia(char *s, int len);
+	static void recebe(char *ans);
+	static void quit();
 };
 #endif
 

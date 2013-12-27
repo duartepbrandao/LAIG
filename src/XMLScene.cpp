@@ -1,8 +1,15 @@
 #include "XMLScene.h"
 
+int XMLScene::num=0;
+
 XMLScene::XMLScene(char *filename)
 {
+	num++;
+	printf("Loading theme %d...\n",num);
 	loadYAF(filename);
+	if(num==4){
+		printf("Load complete\n\n\n\n\n\n");
+	}
 }
 
 void XMLScene::loadYAF(char* filename){
@@ -59,7 +66,6 @@ void XMLScene::doInitElement(){
 	if (initElement == NULL){
 		printf("Init block not found!\n");
 	}else{
-		printf("Processing init:\n");
 		if (initElement){
 			read4Float("background",initElement, background);
 			drawmode=readString("drawmode",initElement);
@@ -83,7 +89,6 @@ void XMLScene::doCameraElement(){
 	if (cameraElement == NULL){
 		printf("camera block not found!\n");
 	}else{
-		printf("Processing cameras:\n");
 
 		if (cameraElement){
 			initial=readString("initial",cameraElement);
@@ -147,7 +152,6 @@ void XMLScene::doLightingElement(){
 	if (lightingElement == NULL){
 		printf("lighting block not found!\n");
 	}else{
-		printf("Processing lights:\n");
 
 		if (lightingElement){
 
@@ -203,7 +207,6 @@ void XMLScene::doTextureElement(){
 	if (texturesElement == NULL){
 		printf("textures block not found!\n");
 	}else{
-		printf("Processing textures:\n");
 		if(texturesElement){
 			textureElement=texturesElement->FirstChildElement( "texture" );
 			if(textureElement!=NULL){
@@ -228,7 +231,6 @@ void XMLScene::doAppearanceElement(){
 	if (appearancesElement == NULL){
 		printf("Appearance block not found!\n");
 	}else{
-		printf("Processing appearances:\n");
 		if (appearancesElement){
 			appearanceElement=appearancesElement->FirstChildElement( "appearance" );
 			if(appearanceElement!=NULL){
@@ -263,11 +265,7 @@ void XMLScene::doAnimationElement()
 	std::string id, type;
 	float span;
 	vector<float> tempControl;
-	if (animationsElement ==NULL){
-		printf("Animations block not found");
-	}
-	else {
-		printf("Processing animations:\n");
+	if (animationsElement !=NULL){
 		if (animationsElement){
 			animationElement=animationsElement->FirstChildElement("animation");
 			if(animationElement!=NULL){
@@ -317,7 +315,6 @@ void XMLScene::doGraphElement(){
 	if (graphElement == NULL){
 		printf("Graph block not found!\n");
 	}else{
-		printf("Processing graph:\n");
 
 		if(graphElement){
 
@@ -625,7 +622,6 @@ void XMLScene::read4Float(char* attribute,TiXmlElement* element, float* flt){
 
 	if(valString && sscanf(valString,"%f %f %f %f",&flt[0], &flt[1], &flt[2], &flt[3])==4){
 		//printf("%s values: %f %f %f %f\n", attribute, flt[0], flt[1], flt[2], flt[3]);
-
 	}else{
 		//printf("%s attribute not found!\n", attribute);
 	}

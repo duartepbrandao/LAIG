@@ -5,6 +5,10 @@
 
 int main(int argc, char* argv[]) {
 
+	if(!TwixtSocket::socketConnect()){
+		return 1;
+	}
+
 	XMLScene xmlscene=XMLScene("Classic/classic.yaf");
 	LightingScene *ls=new LightingScene(xmlscene.getLights(), xmlscene.getGlobals(), xmlscene.getCameras(), xmlscene.getRootID(), xmlscene.getScene(), xmlscene.getAppearances(), xmlscene.getAnimations());
 	ls->addthemes(new LightingScene(xmlscene.getLights(), xmlscene.getGlobals(), xmlscene.getCameras(), xmlscene.getRootID(), xmlscene.getScene(), xmlscene.getAppearances(), xmlscene.getAnimations()));
@@ -14,8 +18,6 @@ int main(int argc, char* argv[]) {
 	ls->addthemes(new LightingScene(xmlscene_2.getLights(), xmlscene_2.getGlobals(), xmlscene_2.getCameras(), xmlscene_2.getRootID(), xmlscene_2.getScene(), xmlscene_2.getAppearances(), xmlscene_2.getAnimations()));
 	XMLScene xmlscene_3=XMLScene("AngryBirds/angrybirds.yaf");
 	ls->addthemes(new LightingScene(xmlscene_3.getLights(), xmlscene_3.getGlobals(), xmlscene_3.getCameras(), xmlscene_3.getRootID(), xmlscene_3.getScene(), xmlscene_3.getAppearances(), xmlscene_3.getAnimations()));
-
-	TwixtSocket* ts=new TwixtSocket();
 
 	CGFapplication app = CGFapplication();
 
@@ -35,5 +37,7 @@ int main(int argc, char* argv[]) {
 		cout << "Erro inesperado: " << ex.what();
 		return -1;
 	}
+	TwixtSocket::quit();
+	getchar();
 	return 0;
 }

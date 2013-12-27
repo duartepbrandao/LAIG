@@ -4,10 +4,13 @@
 #include "CGFinterface.h"
 #include "LightingScene.h"
 
+
 class TPinterface: public CGFinterface {
 	public:
 
 		int app;
+		char board[9000];
+		char boardTemp[9000];
 
 		Peca *c1, *c2, *m1, *m2, *d1, *d2, *a1, *a2;
 

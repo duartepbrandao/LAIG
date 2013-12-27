@@ -7,7 +7,7 @@ GLuint selectBuf[BUFSIZE];
 TPinterface::TPinterface()
 {
 	testVar=0;
-	
+
 	c1 = new Peca("Classic/classic.yaf", 1, "Classic/player1.jpg", "Classic/player1.jpg");
 	c2 = new Peca("Classic/classic.yaf", 2, "Classic/player2.jpg", "Classic/player2.jpg");
 	m1 = new Peca("Mario/KoopaTropa.obj","Mario/mario.yaf", 1, "Mario/KoopaTropa.jpg", "Mario/base_2.jpg");
@@ -16,6 +16,13 @@ TPinterface::TPinterface()
 	d2 = new Peca("DragonBall/dragonball.yaf", 2, "DragonBall/player2.jpg", "DragonBall/player2.jpg");
 	a1 = new Peca("AngryBirds/red.obj","AngryBirds/angrybirds.yaf", 1, "AngryBirds/red.jpg", "AngryBirds/base.jpg");
 	a2 = new Peca("AngryBirds/pig.obj","AngryBirds/angrybirds.yaf", 2, "AngryBirds/pig.jpg", "AngryBirds/base_2.jpg");
+
+	char *s="createBoard(12,_).\n";
+	TwixtSocket::envia(s, strlen(s));
+	char ans[9000];
+	TwixtSocket::recebe(ans);
+	strncpy(board, ans, 9000);
+	strncpy(boardTemp, ans, 9000);
 }
 
 void TPinterface::initGUI()
@@ -179,15 +186,47 @@ void TPinterface::processHits (GLint hits, GLuint buffer[])
 		float deltaX=selected[0]*2.57*1.5+3.05+1.5/2;
 		float deltaY=selected[1]*2.57*1.5+3.1+1.5/2;
 
+
+		//Verifica se é possível jogar numa determinada posicao
+		int num=1;
+		char letra;
 		if(!((LightingScene*) scene)->pecas.empty()){
-			if(((LightingScene*) scene)->pecas[((LightingScene*) scene)->pecas.size()-1]->getPlayerNumber()==2){
+			num=((LightingScene*) scene)->pecas[((LightingScene*) scene)->pecas.size()-1]->getPlayerNumber();
+			if(num==2){
+				num=1;
+				letra='x';
+			}else if(num==1){
+				num=2;
+				letra='y';
+			}
+		}else{
+			num=1;
+			letra='x';
+		}
+
+		char s[100];
+		sprintf (s, "verify_place(%d, %d,_, _, %d, 12).\n", selected[0]+1, selected[1]+1, num);
+		TwixtSocket::envia(s, strlen(s));
+		char ans[128];
+		TwixtSocket::recebe(ans);
+		
+		/*char s2[9000];
+		sprintf (s2, "replaceMatrix(%s, %d, %d,%c,_, _, 0).\n", board, selected[0]+1, selected[1]+1,letra);
+		TwixtSocket::envia(s2, strlen(s2));
+		char ans2[9000];
+		TwixtSocket::recebe(ans2);
+		strncpy(board, ans2, 9000);*/
+		
+		if(ans[0]=='0'){
+			if(num==1){
 				loadPecasPlayer1(deltaX, deltaY);
-			}else{
+			}else if(num==2){
 				loadPecasPlayer2(deltaX, deltaY);
 			}
 		}else{
-			loadPecasPlayer1(deltaX, deltaY);
+			printf("%s\n", ans);
 		}
+		//end
 
 		printf("\n");
 	}
@@ -215,7 +254,7 @@ void TPinterface::loadPecasPlayer1(float deltaX, float deltaY){
 }
 
 void TPinterface::loadPecasPlayer2(float deltaX, float deltaY){
-	
+
 	switch(((LightingScene*) scene)->app){
 	case 0:
 		((LightingScene*) scene)->pecas.push_back(new Peca(c2));
