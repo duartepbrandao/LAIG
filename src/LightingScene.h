@@ -44,7 +44,7 @@ public:
 	Peca* peca;
 	CGFobject* object;//picking
 	vector<Appearence*> apps;
-	Peca *c1, *c2, *m1, *m2, *d1, *d2, *a1, *a2;
+	Peca *c1, *c2, *m1, *m2, *d1, *d2, *a1, *a2, *sombra;
 	vector<Peca*> pecas;
 	vector<LightingScene*> themes;
 	void addthemes(LightingScene* ls){themes.push_back(ls);}
