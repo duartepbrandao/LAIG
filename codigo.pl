@@ -26,36 +26,38 @@ serverLoop(Stream) :-
 	flush_output(Stream),
 	(ClientMsg == quit; ClientMsg == end_of_file), !.
 
-parse_input(comando(Arg1, Arg2), Answer) :-
-	comando(Arg1, Arg2, Answer).
+parse_input(createBoard(BoardSize, Lista), Answer) :-
+	createBoard(BoardSize, Lista, Answer),!.
 	
+parse_input(verify_place(Linha1, Coluna1,Linha, Coluna, Player, BoardSize), Answer) :-
+	verify_place(Linha1, Coluna1,Linha, Coluna, Player, BoardSize, Answer),!.
+	
+parse_input(replaceMatrix(Lista, Linha, Coluna,Letra,ListaC2, Bool, 0), Answer) :-
+	replaceMatrix(Lista, Linha, Coluna,Letra,ListaC2, Bool, 0), write('Aro'),Answer = ListaC2,!.
+
 parse_input(quit, ok-bye) :- !.
-		
-comando(Arg1, Arg2, Answer) :-
-	write(Arg1), nl, write(Arg2), nl,
-	Answer = 5.
 
 
 %%%%%%%%%%%%%%
 %inicia o jogo
 %%%%%%%%%%%%%%
-play(GameMode,BoardSize):-play(GameMode, BoardSize,_,_,1,1).
+%play(GameMode,BoardSize):-play(GameMode, BoardSize,_,_,1,1).
 
-play(GameMode,BoardSize,Lista, ListaTeste, Z,Player):-
-	
-	game_mode(GameMode),
-
-	((Z is 1, 
-	createBoard(BoardSize,Lista),ListaTeste = Lista, show_board(Lista),Z1 is 2, place( _, _, Lista,ListaC,ListaTeste,ListaTesteCT, Player, BoardSize) );
-	(Z is 2, Z1 is 2,
-	place( _, _, Lista,ListaC,ListaTeste,ListaTesteCT, Player, BoardSize))),
-	
-	%show_board(ListaTesteCT),
-	%artificialIntelegence(GameMode),
-	show_board(ListaC),
-	((Player is 1, Player1 is 2);
-	(Player is 2, Player1 is 1)),
-play(GameMode,BoardSize,ListaC,ListaTesteCT, Z1, Player1).
+%play(GameMode,BoardSize,Lista, ListaTeste, Z,Player):-
+%	
+%	game_mode(GameMode),
+%
+%	((Z is 1, 
+%	createBoard(BoardSize,Lista),ListaTeste = Lista, show_board(Lista),Z1 is 2, place( _, _, Lista,ListaC,ListaTeste,ListaTesteCT, Player, BoardSize) );
+%	(Z is 2, Z1 is 2,
+%	place( _, _, Lista,ListaC,ListaTeste,ListaTesteCT, Player, BoardSize))),
+%	
+%	%show_board(ListaTesteCT),
+%	%artificialIntelegence(GameMode),
+%	show_board(ListaC),
+%	((Player is 1, Player1 is 2);
+%	(Player is 2, Player1 is 1)),
+%play(GameMode,BoardSize,ListaC,ListaTesteCT, Z1, Player1).
 	
 
 %%%%%%%%%%
@@ -68,61 +70,51 @@ game_mode('ComputerVsComputer').
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Define qual o player e a respectiva letra do mesmo
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-player(1, 'x', 'X').
-player(2, 'y', 'Y').
+%player(1, 'x', 'X').
+%player(2, 'y', 'Y').
 
 %%%%%%%%%%%%%
 %Fazer Jogada
 %%%%%%%%%%%%%
 print_player(Player):-write('Player '),write(Player), write(':'),nl.
 
-place(Linha, Coluna, Lista,ListaC,ListaTeste,ListaTesteCT, Player, BoardSize):-
-	print_player(Player),
-	place(Player, Linha, Coluna, BoardSize),
-	player(Player,Letra, _),
-	Linha1 is Linha, Coluna1 is Coluna,
-	replaceMatrix(Lista, Linha, Coluna,Letra,ListaC2, Bool, 0),
-	((Bool is 0,
-	place( _, _, ListaC2,ListaC,ListaTeste,ListaTesteCT, Player, BoardSize));
-	(Bool is 1,
-	L = ListaC2, verify_line(ListaC2,L,ListaC, Linha1, Coluna1, Letra, 8,ListaTeste,ListaTesteCT, BoardSize)
-	%checkWin_p1(ListaC, Linha, Coluna, -50, -50, 0, 0, BoardSize)
-	)).
+%place(Linha, Coluna, Lista,ListaC,ListaTeste,ListaTesteCT, Player, BoardSize):-
+%	print_player(Player),
+%	place(Player, Linha, Coluna, BoardSize),
+%	player(Player,Letra, _),
+%	Linha1 is Linha, Coluna1 is Coluna,
+%	replaceMatrix(Lista, Linha, Coluna,Letra,ListaC2, Bool, 0),
+%	((Bool is 0,
+%	place( _, _, ListaC2,ListaC,ListaTeste,ListaTesteCT, Player, BoardSize));
+%	(Bool is 1,
+%	L = ListaC2, verify_line(ListaC2,L,ListaC, Linha1, Coluna1, Letra, 8,ListaTeste,ListaTesteCT, BoardSize)
+%	)).
 	
-place(Player, Linha, Coluna, BoardSize):-
-	write('Linha = '),
-	read(Linha1),
-	write('Coluna = '),
-	read(Coluna1),!,
-	verify_place(Linha1, Coluna1, Linha, Coluna, Player, BoardSize).
+%place(Player, Linha, Coluna, BoardSize):-
+%	write('Linha = '),
+%	read(Linha1),
+%	Linha1 is Linha,
+%	write('Coluna = '),
+%	Coluna1 is Coluna,
+%	read(Coluna1),!,
+%	verify_place(Linha1, Coluna1, Linha, Coluna, Player, BoardSize).
 	
-verify_place(Linha1, Coluna1,Linha, Coluna, Player, BoardSize):-
-	 ((Linha1 <1),
-	 write('Jogada invalida...Jogue outra vez'),nl,print_player(Player),place(Player, Linha, Coluna, BoardSize));
-	 ((Linha1 > BoardSize),
-	 write('Jogada invalida...Jogue outra vez'),nl,print_player(Player),place(Player, Linha, Coluna, BoardSize));
-	 ((Coluna1 < 1),
-	 write('Jogada invalida...Jogue outra vez'),nl,print_player(Player),place(Player, Linha, Coluna, BoardSize));
-	 ((Coluna1 > BoardSize),
-	 write('Jogada invalida...Jogue outra vez'),nl,print_player(Player),place(Player, Linha, Coluna, BoardSize));
-	 ((Linha1 is 1, Coluna1 is 1),
-	 write('Jogada fora dos limites...Jogue outra vez'),nl,print_player(Player),place(Player, Linha, Coluna, BoardSize));
-	 ((Linha1 is 1, Coluna1 == BoardSize),
-	 write('Jogada fora dos limites...Jogue outra vez'),nl,print_player(Player),place(Player, Linha, Coluna, BoardSize));
-	 ((Linha1 == BoardSize, Coluna1 is 1),
-	 write('Jogada fora dos limites...Jogue outra vez'),nl,print_player(Player),place(Player, Linha, Coluna, BoardSize));
-	 ((Linha1 == BoardSize, Coluna1 == BoardSize),
-	 write('Jogada fora dos limites...Jogue outra vez'),nl,print_player(Player),place(Player, Linha, Coluna, BoardSize));
-	 ((Player is 1, Coluna1 is 1),
-	 write('Nao pode jogar fora dos limites das linhas do adversario...Jogue outra vez'),nl,print_player(Player),place(Player, Linha, Coluna, BoardSize));
-	 ((Player is 1, Coluna1 == BoardSize),
-	 write('Nao pode jogar fora dos limites das linhas do adversario...Jogue outra vez'),nl,print_player(Player),place(Player, Linha, Coluna, BoardSize));
-	 ((Player is 2, Linha1 is 1),
-	 write('Nao pode jogar fora dos limites das linhas do adversario...Jogue outra vez'),nl,print_player(Player),place(Player, Linha, Coluna, BoardSize));
-	 ((Player is 2, Linha1== BoardSize),
-	 write('Nao pode jogar fora dos limites das linhas do adversario...Jogue outra vez'),nl,print_player(Player),place(Player, Linha, Coluna, BoardSize));
+verify_place(Linha1, Coluna1,Linha, Coluna, Player, BoardSize, Answer):-
+	 (((Linha1 <1), Answer = 'Jogada invalida...Jogue outra vez!');
+	 ((Linha1 > BoardSize), Answer = 'Jogada invalida...Jogue outra vez!');
+	 ((Coluna1 < 1), Answer = 'Jogada invalida...Jogue outra vez!');
+	 ((Coluna1 > BoardSize), Answer = 'Jogada invalida...Jogue outra vez!');
+	 ((Linha1 is 1, Coluna1 is 1), Answer = 'Jogada invalida...Jogue outra vez!');
+	 ((Linha1 is 1, Coluna1 == BoardSize), Answer = 'Jogada fora dos limites...Jogue outra vez!');
+	 ((Linha1 == BoardSize, Coluna1 is 1), Answer = 'Jogada fora dos limites...Jogue outra vez!');
+	 ((Linha1 == BoardSize, Coluna1 == BoardSize), Answer = 'Jogada fora dos limites...Jogue outra vez!');
+	 ((Player is 1, Coluna1 is 1), Answer = 'Nao pode jogar fora dos limites das linhas do adversario...Jogue outra vez!');
+	 ((Player is 1, Coluna1 == BoardSize), Answer = 'Nao pode jogar fora dos limites das linhas do adversario...Jogue outra vez!');
+	 ((Player is 2, Linha1 is 1), Answer = 'Nao pode jogar fora dos limites das linhas do adversario...Jogue outra vez!');
+	 ((Player is 2, Linha1== BoardSize), Answer = 'Nao pode jogar fora dos limites das linhas do adversario...Jogue outra vez!');
+	 (Answer = 0,
 	 Linha is Linha1*2,
-	 Coluna is (Coluna1-1)*8+4.
+	 Coluna is (Coluna1-1)*8+4)).
 	
 
 %%%%%%%%%%%%%%%%%
@@ -156,7 +148,8 @@ replaceList([H|T], Index, X, [H|R], Bool, Bool2):-
 replaceList([H|T], 0, X, [H1|T], Bool, Bool2):-
 	(Bool2 is 0,
 		((H \='o',
-		write('Nao pode jogar por cima de outras pecas...Jogue outra vez'), nl, H1 = H, Bool is 0);
+		%Answer = 'Nao pode jogar por cima de outras pecas...Jogue outra vez', nl, 
+		H1 = H, Bool is 0);
 		H1 = X, Bool is 1));
 	(Bool2 is 1,  H1 = X);
 	(Bool2 is 2, 
@@ -448,7 +441,7 @@ createLines(I, N, OldMatrix, NewMatrix):-
 		
 % Cria um board N x N
 
-createBoard(N, NewMatrix):-
+createBoard(N, NewMatrix, Answer):-
 	%Criar o header
 	boardHeader(N, Header),
 	insertEnd(Header, [], MatrixAux1),
@@ -456,4 +449,5 @@ createBoard(N, NewMatrix):-
 	createLines(1, N, MatrixAux1, MatrixAux2),
 	insertEnd(_, MatrixAux2, MatrixAux3),
 	Matrix = MatrixAux3,
-	NewMatrix = Matrix.
+	NewMatrix = Matrix,
+	Answer = NewMatrix.
